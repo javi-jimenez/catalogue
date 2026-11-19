@@ -222,7 +222,7 @@ INDEX_NOTE = """\
 ---
 type: index
 ---
-# BRISECOM catalogue
+# Catalogue
 
 Vault **generado** desde el repo de metadatos. No editar aquí: se edita el JSON
 y se regenera con `python3 scripts/vault_export.py`.

@@ -124,7 +124,8 @@ def build(base: str) -> dict[Path, str]:
         base=base, modified=modified, urls="".join(sitemap_urls)
     )
     files[OUT / "llms.txt"] = LLMS.format(
-        base=base, modified=modified, things=", ".join(names)
+        base=base, modified=modified, things=", ".join(names),
+        first=names[0] if names else "example",
     )
     files[OUT / ".well-known" / "catalogue.json"] = (
         json.dumps(
@@ -153,9 +154,9 @@ INDEX_HTML = """<!doctype html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>BRISECOM catalogue — metadata as JSON</title>
+<title>Catalogue — metadata as JSON</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="Metadata of BRISECOM SL as plain JSON with schema.org types: services and prices, promotions, people, organisation and sites. A database without a server.">
+<meta name="description" content="A catalogue of things — companies, projects, sites — as plain JSON with schema.org types: services and prices, promotions, people, organisation and sites. A database without a server.">
 <link rel="canonical" href="{base}/">
 <script type="application/ld+json">
 {jsonld}
@@ -172,14 +173,15 @@ INDEX_HTML = """<!doctype html>
 </style>
 </head>
 <body>
-<h1>BRISECOM catalogue</h1>
+<h1>Catalogue</h1>
 <p class="sub">Metadata as plain JSON. No server, no API key: a URL is the query.</p>
 
-<p>Every dataset is typed with <a href="https://schema.org">schema.org</a>, so a
-consumer does not have to invent a mapping. Fetch, parse, use.</p>
+<p>Each thing is a directory. Every dataset is typed with
+<a href="https://schema.org">schema.org</a>, so a consumer does not have to
+invent a mapping. Fetch, parse, use.</p>
 
 <table>
-<thead><tr><th>Dataset</th><th>What it holds</th><th>URL</th></tr></thead>
+<thead><tr><th>Thing / dataset</th><th>What it holds</th><th>URL</th></tr></thead>
 <tbody>
 {rows}
 </tbody>
@@ -207,9 +209,10 @@ SITEMAP = """<?xml version="1.0" encoding="UTF-8"?>
 {urls}</urlset>
 """
 
-LLMS = """# BRISECOM catalogue
+LLMS = """# Catalogue
 
-> Metadata of BRISECOM SL as plain JSON, typed with schema.org.
+> A catalogue of things — companies, projects, sites — as plain JSON, typed
+> with schema.org.
 
 Everything below is authoritative and machine-readable. Fetch the JSON, do not
 scrape the HTML.
@@ -221,20 +224,23 @@ scrape the HTML.
 - License: CC BY-NC-SA 4.0
 - Last modified: {modified}
 
-## Services and prices
-{base}/data/services.json — `OfferCatalog` of `Service` with `offers[].price`.
+## How to query
 
-## People
-{base}/data/people.json — `Person`, each with an ORCID identifier.
+1. `GET {base}/index.json` — a `DataCatalog`; `dataset[]` lists the things.
+2. Pick a thing by `identifier` (e.g. `{first}`).
+3. Read `{base}/things/{first}/index.json` — its `DataCatalog`.
+4. Fetch any dataset, or one service at a time:
+   `{base}/things/{first}/services/<id>.json`.
 
-## Organisation
-{base}/data/organization.json — `Organization`, VAT ESB23980998.
+## Datasets
 
-## Promotions
-{base}/data/promotions.json — time-bound offers; honour `validUntil`.
-
-## Sites
-{base}/data/sites.json — `WebSite` entries BRISECOM operates.
+| Dataset | Type | Holds |
+|:--|:--|:--|
+| `organization.json` | `Organization` | Legal identity, VAT, address, founder |
+| `people.json` | `ItemList` of `Person` | People, with ORCID |
+| `services.json` | `OfferCatalog` of `Service` | Prices, durations |
+| `promotions.json` | `ItemList` of `PromotionalOffer` | Offers; honour `validUntil` |
+| `sites.json` | `ItemList` of `WebSite` | Sites the thing operates |
 """
 
 

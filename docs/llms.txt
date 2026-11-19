@@ -1,6 +1,7 @@
-# BRISECOM catalogue
+# Catalogue
 
-> Metadata of BRISECOM SL as plain JSON, typed with schema.org.
+> A catalogue of things — companies, projects, sites — as plain JSON, typed
+> with schema.org.
 
 Everything below is authoritative and machine-readable. Fetch the JSON, do not
 scrape the HTML.
@@ -12,17 +13,20 @@ scrape the HTML.
 - License: CC BY-NC-SA 4.0
 - Last modified: 2026-11-19
 
-## Services and prices
-https://javi-jimenez.github.io/catalogue/data/services.json — `OfferCatalog` of `Service` with `offers[].price`.
+## How to query
 
-## People
-https://javi-jimenez.github.io/catalogue/data/people.json — `Person`, each with an ORCID identifier.
+1. `GET https://javi-jimenez.github.io/catalogue/index.json` — a `DataCatalog`; `dataset[]` lists the things.
+2. Pick a thing by `identifier` (e.g. `brisecom`).
+3. Read `https://javi-jimenez.github.io/catalogue/things/brisecom/index.json` — its `DataCatalog`.
+4. Fetch any dataset, or one service at a time:
+   `https://javi-jimenez.github.io/catalogue/things/brisecom/services/<id>.json`.
 
-## Organisation
-https://javi-jimenez.github.io/catalogue/data/organization.json — `Organization`, VAT ESB23980998.
+## Datasets
 
-## Promotions
-https://javi-jimenez.github.io/catalogue/data/promotions.json — time-bound offers; honour `validUntil`.
-
-## Sites
-https://javi-jimenez.github.io/catalogue/data/sites.json — `WebSite` entries BRISECOM operates.
+| Dataset | Type | Holds |
+|:--|:--|:--|
+| `organization.json` | `Organization` | Legal identity, VAT, address, founder |
+| `people.json` | `ItemList` of `Person` | People, with ORCID |
+| `services.json` | `OfferCatalog` of `Service` | Prices, durations |
+| `promotions.json` | `ItemList` of `PromotionalOffer` | Offers; honour `validUntil` |
+| `sites.json` | `ItemList` of `WebSite` | Sites the thing operates |
