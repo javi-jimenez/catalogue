@@ -108,6 +108,20 @@ vendored from a second location.
 - **Breaking changes** (removing a field a consumer reads) bump the major
   version.
 
+## AI and search crawlers
+
+The published site is built to be **cited, not paraphrased**: every fact is
+plain JSON, typed with schema.org, at a stable URL, with a date.
+
+- `robots.txt` allows every crawler, AI ones included.
+- `sitemap.xml` lists every data URL.
+- `llms.txt` explains how to query it, and points at the JSON instead of
+  copying it.
+- `/.well-known/catalogue.json` is a machine entry point.
+
+What each site is still missing — and what not to do — is written down in
+[`docs/ai-discoverability.md`](docs/ai-discoverability.md).
+
 ## Validate
 
 ```bash
