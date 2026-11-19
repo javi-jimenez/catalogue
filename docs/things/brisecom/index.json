@@ -7,14 +7,14 @@
     "@id": "https://brisecom.org/#organization",
     "name": "BRISECOM SL"
   },
-  "url": "things/brisecom/",
+  "url": "https://javi-jimenez.github.io/catalogue/things/brisecom/",
   "version": "1.0",
   "dateModified": "2026-11-19",
   "dataset": [
     {
       "@type": "Dataset",
       "name": "organization",
-      "url": "organization.json",
+      "url": "entity.json",
       "encodingFormat": "application/json"
     },
     {
@@ -41,5 +41,7 @@
       "url": "sites.json",
       "encodingFormat": "application/json"
     }
-  ]
+  ],
+  "kind": "Organization",
+  "description": "BRISECOM SL"
 }

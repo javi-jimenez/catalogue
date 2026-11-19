@@ -8,7 +8,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 ROOT_SOURCES = ["index"]
-THING_SOURCES = ["index", "organization", "people", "services", "promotions", "sites"]
+THING_SOURCES = ["index", "entity", "people", "services", "promotions", "sites"]
 errors: list[str] = []
 
 
@@ -34,7 +34,14 @@ for name in ROOT_SOURCES:
 for folder in sorted((ROOT / "things").iterdir()):
     if not folder.is_dir():
         continue
-    for name in THING_SOURCES:
+    # Se comprueba lo que la entidad declara, no una lista fija: una persona
+    # no tiene servicios y no por ello está incompleta.
+    manifest = json.loads((folder / "index.json").read_text(encoding="utf-8"))
+    declared = [
+        str(d.get("url", "")).removesuffix(".json")
+        for d in manifest.get("dataset", [])
+    ]
+    for name in ["index"] + declared:
         path = folder / f"{name}.json"
         if not path.exists():
             errors.append(f"falta things/{folder.name}/{name}.json")

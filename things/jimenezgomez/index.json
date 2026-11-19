@@ -1,0 +1,29 @@
+{
+  "@context": "https://schema.org",
+  "@type": "DataCatalog",
+  "name": "Francisco Javier Jiménez Gómez",
+  "about": {
+    "@type": "Person",
+    "@id": "https://jimenezgomez.org/#person",
+    "name": "Francisco Javier Jiménez Gómez"
+  },
+  "url": "things/jimenezgomez/",
+  "version": "1.0",
+  "dateModified": "2026-11-19",
+  "dataset": [
+    {
+      "@type": "Dataset",
+      "name": "entity",
+      "url": "entity.json",
+      "encodingFormat": "application/json"
+    },
+    {
+      "@type": "Dataset",
+      "name": "sites",
+      "url": "sites.json",
+      "encodingFormat": "application/json"
+    }
+  ],
+  "kind": "Person",
+  "description": "Security architect and developer"
+}

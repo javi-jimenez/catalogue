@@ -45,6 +45,15 @@ def load(name: str, thing: str) -> dict:
     return json.loads((CATALOGUE / "things" / thing / f"{name}.json").read_text(encoding="utf-8"))
 
 
+def datasets(thing: str) -> list[str]:
+    """Datasets que esa entidad declara en su manifiesto."""
+    manifest = load("index", thing)
+    return [
+        str(d.get("url", "")).removesuffix(".json")
+        for d in manifest.get("dataset", [])
+    ]
+
+
 def q(value: object) -> str:
     """Escapa un escalar para YAML entre comillas dobles."""
     text = str(value).replace("\\", "\\\\").replace('"', '\\"')
@@ -84,11 +93,12 @@ def build() -> dict[Path, str]:
 
 def build_thing(thing: str) -> dict[Path, str]:
     files: dict[Path, str] = {}
-    org = load("organization", thing)
-    people = load("people", thing)["itemListElement"]
-    services = load("services", thing)["itemListElement"]
-    promos = load("promotions", thing)["itemListElement"]
-    sites = load("sites", thing)["itemListElement"]
+    org = load("entity", thing)
+    available = datasets(thing)
+    people = load("people", thing)["itemListElement"] if "people" in available else []
+    services = load("services", thing)["itemListElement"] if "services" in available else []
+    promos = load("promotions", thing)["itemListElement"] if "promotions" in available else []
+    sites = load("sites", thing)["itemListElement"] if "sites" in available else []
     org_id = org["@id"]
 
     # --- organización ---
@@ -96,7 +106,7 @@ def build_thing(thing: str) -> dict[Path, str]:
     files[VAULT / thing.capitalize() / "Organization" / f"{org['name']}.md"] = note(
         {
             "id": org["@id"],
-            "type": "organization",
+            "type": org.get("@type", "entity").lower(),
             "name": org["name"],
             "legal_name": org.get("legalName"),
             "vat": org.get("vatID"),

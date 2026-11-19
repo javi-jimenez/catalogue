@@ -17,7 +17,8 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent
 THINGS = ROOT / "things"
-DATASETS = ["organization", "people", "services", "promotions", "sites"]
+DATASETS = ["entity", "people", "services", "promotions", "sites"]
+KINDS = {"Organization", "Person", "Project", "Corporation", "NGO", "LocalBusiness"}
 
 errors: list[str] = []
 
@@ -40,36 +41,48 @@ def load(path: Path) -> dict:
 
 
 def check_thing(slug: str, folder: Path) -> dict:
-    org = {}
-    for name in DATASETS:
-        path = folder / f"{name}.json"
-        if not path.exists():
-            fail(f"{slug}: falta {name}.json")
-            continue
-        data = load(path)
-        if name == "organization":
-            org = data
-
     manifest = load(folder / "index.json") if (folder / "index.json").exists() else {}
-    listed = {
+    listed = [
         str(d.get("url", "")).rsplit("/", 1)[-1]
         for d in manifest.get("dataset", [])
-    }
-    for name in DATASETS:
-        if f"{name}.json" not in listed:
-            fail(f"{slug}/index.json: no declara {name}.json en dataset[]")
+    ]
 
+    # Cada entidad declara sus propios datasets: una persona no tiene
+    # servicios ni promociones, y no por ello está incompleta.
+    for name in listed:
+        if not (folder / name).exists():
+            fail(f"{slug}: index.json declara {name} pero no existe")
+    if "entity.json" not in listed:
+        fail(f"{slug}/index.json: no declara entity.json en dataset[]")
+
+    kind = manifest.get("kind")
+    if kind not in KINDS:
+        fail(f"{slug}/index.json: kind '{kind}' no es un Thing de schema.org")
+    about = manifest.get("about") or {}
+    if about.get("@type") != kind:
+        fail(f"{slug}/index.json: discrepa entre kind y about.@type")
+    if not about.get("@id"):
+        fail(f"{slug}/index.json: sin about.@id")
+
+    org = load(folder / "entity.json") if (folder / "entity.json").exists() else {}
     org_id = org.get("@id")
-    if not org.get("vatID"):
-        fail(f"{slug}: organization.json sin vatID")
+    kind = org.get("@type")
+    if kind not in KINDS:
+        fail(f"{slug}: entity.json tiene @type '{kind}', no es un Thing conocido")
+    if  kind == "Organization" and not org.get("vatID"):
+        fail(f"{slug}: entity.json es Organization y no declara vatID")
 
-    people = load(folder / "people.json").get("itemListElement", []) if (folder / "people.json").exists() else []
+    people = (
+        load(folder / "people.json").get("itemListElement", [])
+        if "people.json" in listed
+        else []
+    )
     person_ids = {p.get("@id") for p in people}
     founder = (org.get("founder") or {}).get("@id")
     if founder and founder not in person_ids:
         fail(f"{slug}: founder {founder} no está en people.json")
     for emp in org.get("employee") or []:
-        if emp.get("@id") not in person_ids:
+        if people and emp.get("@id") not in person_ids:
             fail(f"{slug}: employee {emp.get('@id')} no está en people.json")
 
     for person in people:
@@ -77,7 +90,11 @@ def check_thing(slug: str, folder: Path) -> dict:
         if ident.get("propertyID") == "ORCID" and len(str(ident.get("value", ""))) != 19:
             fail(f"{slug}: ORCID raro en {person.get('name')}")
 
-    services = load(folder / "services.json").get("itemListElement", []) if (folder / "services.json").exists() else []
+    services = (
+        load(folder / "services.json").get("itemListElement", [])
+        if "services.json" in listed
+        else []
+    )
     seen: set[str] = set()
     for svc in services:
         ident = svc.get("identifier")
@@ -94,13 +111,19 @@ def check_thing(slug: str, folder: Path) -> dict:
         if not svc.get("display"):
             fail(f"{slug}/services.json: '{ident}' sin bloque display")
 
-    for promo in load(folder / "promotions.json").get("itemListElement", []) if (folder / "promotions.json").exists() else []:
+    promotions = (
+        load(folder / "promotions.json").get("itemListElement", [])
+        if "promotions.json" in listed
+        else []
+    )
+    for promo in promotions:
         if "validUntil" not in promo:
             fail(f"{slug}/promotions.json: '{promo.get('identifier')}' sin validUntil")
         if not promo.get("appliesTo"):
             fail(f"{slug}/promotions.json: '{promo.get('identifier')}' sin appliesTo")
 
-    return {"slug": slug, "org": org, "services": len(services), "people": len(people)}
+    return {"slug": slug, "org": org, "services": len(services), "people": len(people),
+            "datasets": len(listed)}
 
 
 def main() -> int:
@@ -113,18 +136,34 @@ def main() -> int:
     for ghost in sorted(declared - on_disk):
         fail(f"index.json: declara '{ghost}' pero no existe el directorio")
 
-    # Clasificación schema.org: cada entidad declara su tipo.
-    KINDS = {"Organization", "Person", "Project", "Corporation", "NGO", "LocalBusiness"}
+    # La identidad del catálogo no puede ser la de la entidad que describe.
+    catalogue_id = str(index.get("@id", ""))
     for entry in index.get("dataset", []):
-        kind = entry.get("kind")
-        if kind not in KINDS:
-            fail(f"index.json: '{entry.get('identifier')}' tiene kind '{kind}' "
-                 f"que no es un subtipo de schema.org/Thing conocido")
-        about = entry.get("about") or {}
-        if about.get("@type") != kind:
-            fail(f"index.json: '{entry.get('identifier')}' discrepa entre kind y about.@type")
-        if not about.get("@id"):
-            fail(f"index.json: '{entry.get('identifier')}' sin about.@id")
+        org_path = THINGS / entry.get("identifier", "") / "organization.json"
+        if not org_path.exists():
+            continue
+        org = json.loads(org_path.read_text(encoding="utf-8"))
+        org_id = str(org.get("@id", ""))
+        host = org_id.split("/")[2] if "//" in org_id else ""
+        if host and host in catalogue_id:
+            fail(
+                f"index.json: @id '{catalogue_id}' cuelga del dominio de "
+                f"'{entry.get('identifier')}' ({host}); el catálogo es un "
+                f"contenedor, no parte de la entidad"
+            )
+
+    # La raíz es solo un índice: ninguna entrada debe repetir datos de la
+    # entidad (eso vive en things/<slug>/). Solo referencia.
+    ALLOWED_ROOT_KEYS = {"@type", "identifier", "url"}
+    for entry in index.get("dataset", []):
+        extra = set(entry) - ALLOWED_ROOT_KEYS
+        if extra:
+            fail(
+                f"index.json: '{entry.get('identifier')}' lleva {sorted(extra)}; "
+                f"la raíz solo referencia, los datos van en things/<slug>/"
+            )
+        if not str(entry.get("url", "")).endswith("/index.json"):
+            fail(f"index.json: '{entry.get('identifier')}' debe apuntar a su index.json")
 
     summary = [check_thing(slug, THINGS / slug) for slug in sorted(on_disk & declared)]
 

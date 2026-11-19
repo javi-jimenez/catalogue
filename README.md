@@ -25,17 +25,32 @@ A catalogue of **things** — a `Thing` in schema.org is the root type, so a
 company, a person and a project all fit without inventing a taxonomy.
 
 ```
-index.json                          DataCatalog  → dataset[] (one per thing)
-things/<slug>/index.json            DataCatalog  → about: the thing, dataset[]: its files
-things/<slug>/organization.json     Organization
-things/<slug>/people.json           ItemList of Person
-things/<slug>/services.json         OfferCatalog of Service with offers
-things/<slug>/promotions.json       ItemList of PromotionalOffer
-things/<slug>/sites.json            ItemList of WebSite
+index.json                        DataCatalog → dataset[] (references only)
+things/<slug>/index.json          DataCatalog → about: the thing, dataset[]: its files
+things/<slug>/entity.json         Organization | Person | Project  (who it is)
+things/<slug>/people.json         ItemList of Person
+things/<slug>/services.json       OfferCatalog of Service with offers
+things/<slug>/promotions.json     ItemList of PromotionalOffer
+things/<slug>/sites.json          ItemList of WebSite
 ```
 
-Adding a company, a project or a person is adding a directory and one entry in
+The root is **only schema**: it names the catalogue and points at each thing.
+It carries no company name, no VAT, no prices. Everything a thing is lives in
+its own directory, so the same catalogue can hold a company, a person and a
+project without the root knowing anything about them.
+
+Adding a company, a project or a person is adding a directory and one line in
 `index.json`. Nothing else changes.
+
+Each thing declares which datasets it has. A person has no services and no
+promotions, and is not incomplete because of it:
+
+```json
+"dataset": [
+  { "@type": "Dataset", "name": "entity", "url": "entity.json" },
+  { "@type": "Dataset", "name": "sites",  "url": "sites.json" }
+]
+```
 
 Each entry declares its schema.org classification, and the validator enforces
 that `kind` and `about.@type` agree:
@@ -43,17 +58,23 @@ that `kind` and `about.@type` agree:
 ```json
 {
   "@type": "DataCatalog",
-  "identifier": "brisecom",
+  "name": "BRISECOM SL",
   "kind": "Organization",
   "about": { "@type": "Organization", "@id": "https://brisecom.org/#organization" }
 }
+```
+
+The root entry for the same thing is three fields and nothing else:
+
+```json
+{ "@type": "DataCatalog", "identifier": "brisecom", "url": "things/brisecom/index.json" }
 ```
 
 ## Datasets per thing
 
 | File | What it holds | schema.org |
 |:--|:--|:--|
-| `organization.json` | Legal identity, VAT, address, contact, founder | `Organization` |
+| `entity.json` | Who it is: legal identity and VAT, or ORCID and profiles | `Organization`, `Person` or `Project` |
 | `people.json` | People with their ORCID and public profiles | `ItemList` → `Person` |
 | `services.json` | The service catalogue with prices | `OfferCatalog` → `Service` → `Offer` |
 | `promotions.json` | Time-bound offers, each with `validUntil` | `ItemList` → `PromotionalOffer` |
@@ -136,7 +157,7 @@ a web app, a script, an AI agent — can query the facts over plain HTTP:
 | `/things/<slug>/services.json` | `OfferCatalog` with prices |
 | `/things/<slug>/services/<id>.json` | One `Service`, one URL — no need to walk the list |
 | `/things/<slug>/people.json` | `Person` with ORCID |
-| `/things/<slug>/organization.json` | `Organization` with VAT |
+| `/things/<slug>/entity.json` | The thing itself (`Organization`, `Person`…) |
 | `/things/<slug>/promotions.json` | Offers, each with `validUntil` |
 | `/things/<slug>/sites.json` | Sites operated |
 | `/llms.txt` | Plain summary for AI agents |

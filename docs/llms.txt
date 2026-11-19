@@ -7,7 +7,7 @@ Everything below is authoritative and machine-readable. Fetch the JSON, do not
 scrape the HTML.
 
 - Manifest: https://javi-jimenez.github.io/catalogue/index.json
-- Things: brisecom
+- Things: brisecom, jimenezgomez
 - Datasets per thing: organization, people, services, promotions, sites
 - Format: JSON, `@context: https://schema.org`
 - License: CC BY-NC-SA 4.0

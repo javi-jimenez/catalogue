@@ -1,53 +1,22 @@
 {
   "@context": "https://schema.org",
   "@type": "DataCatalog",
-  "@id": "https://brisecom.org/#catalogue",
+  "@id": "https://github.com/javi-jimenez/catalogue#catalogue",
   "name": "Catalogue",
-  "description": "A catalogue of things — companies, projects or any entity — and their metadata as JSON: services and prices, promotions, people, organisation and sites. A database without a server: git is the storage, a URL is the query.",
-  "url": "https://brisecom.org/data/",
+  "description": "Index of things. Each entry points to its own catalogue.",
   "license": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
-  "version": "4.0",
+  "version": "6.0",
   "dateModified": "2026-11-19",
   "dataset": [
     {
       "@type": "DataCatalog",
       "identifier": "brisecom",
-      "name": "BRISECOM SL",
-      "about": {
-        "@type": "Organization",
-        "@id": "https://brisecom.org/#organization",
-        "name": "BRISECOM SL"
-      },
-      "kind": "Organization",
-      "description": "Metadata of BRISECOM SL",
-      "url": "things/brisecom/",
-      "dataset": [
-        {
-          "@type": "Dataset",
-          "name": "organization",
-          "url": "things/brisecom/organization.json"
-        },
-        {
-          "@type": "Dataset",
-          "name": "people",
-          "url": "things/brisecom/people.json"
-        },
-        {
-          "@type": "Dataset",
-          "name": "services",
-          "url": "things/brisecom/services.json"
-        },
-        {
-          "@type": "Dataset",
-          "name": "promotions",
-          "url": "things/brisecom/promotions.json"
-        },
-        {
-          "@type": "Dataset",
-          "name": "sites",
-          "url": "things/brisecom/sites.json"
-        }
-      ]
+      "url": "things/brisecom/index.json"
+    },
+    {
+      "@type": "DataCatalog",
+      "identifier": "jimenezgomez",
+      "url": "things/jimenezgomez/index.json"
     }
   ]
 }

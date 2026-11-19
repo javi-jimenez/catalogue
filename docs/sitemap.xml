@@ -3,7 +3,7 @@
   <url><loc>https://javi-jimenez.github.io/catalogue/</loc><lastmod>2026-11-19</lastmod></url>
   <url><loc>https://javi-jimenez.github.io/catalogue/index.json</loc><lastmod>2026-11-19</lastmod></url>
   <url><loc>https://javi-jimenez.github.io/catalogue/things/brisecom/index.json</loc></url>
-  <url><loc>https://javi-jimenez.github.io/catalogue/things/brisecom/organization.json</loc></url>
+  <url><loc>https://javi-jimenez.github.io/catalogue/things/brisecom/entity.json</loc></url>
   <url><loc>https://javi-jimenez.github.io/catalogue/things/brisecom/people.json</loc></url>
   <url><loc>https://javi-jimenez.github.io/catalogue/things/brisecom/services.json</loc></url>
   <url><loc>https://javi-jimenez.github.io/catalogue/things/brisecom/promotions.json</loc></url>
@@ -15,4 +15,7 @@
   <url><loc>https://javi-jimenez.github.io/catalogue/things/brisecom/services/audit-areas.json</loc></url>
   <url><loc>https://javi-jimenez.github.io/catalogue/things/brisecom/services/market-pieces.json</loc></url>
   <url><loc>https://javi-jimenez.github.io/catalogue/things/brisecom/services/protection.json</loc></url>
+  <url><loc>https://javi-jimenez.github.io/catalogue/things/jimenezgomez/index.json</loc></url>
+  <url><loc>https://javi-jimenez.github.io/catalogue/things/jimenezgomez/entity.json</loc></url>
+  <url><loc>https://javi-jimenez.github.io/catalogue/things/jimenezgomez/sites.json</loc></url>
 </urlset>

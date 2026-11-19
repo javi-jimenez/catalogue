@@ -32,7 +32,7 @@ DEFAULT_BASE = os.environ.get(
 ).rstrip("/")
 
 DATASETS = {
-    "organization": "Legal identity, VAT, address and founder",
+    "entity": "Legal identity, VAT, address and founder",
     "people": "People with their ORCID and public profiles",
     "services": "Service catalogue with prices",
     "promotions": "Time-bound offers with validUntil",
@@ -59,18 +59,14 @@ def build(base: str) -> dict[Path, str]:
     index = load("index")
     names = things()
 
-    # Índice raíz publicado, con URLs absolutas.
     published = dict(index)
+    published["url"] = f"{base}/"
     published["dataset"] = [
         {
-            **t,
-            "url": f"{base}/{t['url']}",
-            "manifest": f"{base}/things/{t['identifier']}/index.json",
-            "dataset": [
-                {**d, "url": f"{base}/{d['url']}"} for d in t.get("dataset", [])
-            ],
+            **entry,
+            "url": f"{base}/things/{entry['identifier']}/index.json",
         }
-        for t in index.get("dataset", [])
+        for entry in index.get("dataset", [])
     ]
     files[OUT / "index.json"] = json.dumps(published, ensure_ascii=False, indent=2) + "\n"
 
@@ -79,12 +75,18 @@ def build(base: str) -> dict[Path, str]:
 
     for thing in names:
         manifest = load_thing(thing, "index")
+        listed = [
+            str(d.get("url", "")).removesuffix(".json")
+            for d in manifest.get("dataset", [])
+        ]
+        published_manifest = dict(manifest)
+        published_manifest["url"] = f"{base}/things/{thing}/"
         files[OUT / "things" / thing / "index.json"] = (
-            json.dumps(manifest, ensure_ascii=False, indent=2) + "\n"
+            json.dumps(published_manifest, ensure_ascii=False, indent=2) + "\n"
         )
         sitemap_urls.append(f"  <url><loc>{base}/things/{thing}/index.json</loc></url>\n")
 
-        for name in DATASETS:
+        for name in listed:
             data = load_thing(thing, name)
             modified_all.append(str(data.get("dateModified", "")))
             files[OUT / "things" / thing / f"{name}.json"] = (
@@ -94,19 +96,19 @@ def build(base: str) -> dict[Path, str]:
                 f"  <url><loc>{base}/things/{thing}/{name}.json</loc></url>\n"
             )
 
-        # Una URL por servicio: el hecho aislado, sin recorrer el catálogo.
-        for svc in load_thing(thing, "services").get("itemListElement", []):
-            ident = svc["identifier"]
-            single = {
-                "@context": "https://schema.org",
-                **{k: v for k, v in svc.items() if k != "@context"},
-            }
-            files[OUT / "things" / thing / "services" / f"{ident}.json"] = (
-                json.dumps(single, ensure_ascii=False, indent=2) + "\n"
-            )
-            sitemap_urls.append(
-                f"  <url><loc>{base}/things/{thing}/services/{ident}.json</loc></url>\n"
-            )
+        if "services" in listed:
+            for svc in load_thing(thing, "services").get("itemListElement", []):
+                ident = svc["identifier"]
+                single = {
+                    "@context": "https://schema.org",
+                    **{k: v for k, v in svc.items() if k != "@context"},
+                }
+                files[OUT / "things" / thing / "services" / f"{ident}.json"] = (
+                    json.dumps(single, ensure_ascii=False, indent=2) + "\n"
+                )
+                sitemap_urls.append(
+                    f"  <url><loc>{base}/things/{thing}/services/{ident}.json</loc></url>\n"
+                )
 
     modified = max([m for m in modified_all if m], default="") or date.today().isoformat()
 
@@ -137,7 +139,6 @@ def build(base: str) -> dict[Path, str]:
                 "format": "application/json",
                 "schema": "https://schema.org",
                 "things": names,
-                "datasets": list(DATASETS),
                 "version": index.get("version"),
                 "license": index.get("license"),
             },
@@ -263,7 +264,10 @@ def main() -> int:
         (
             str(load_thing(t, n).get("dateModified", ""))
             for t in things()
-            for n in DATASETS
+            for n in [
+                str(d.get("url", "")).removesuffix(".json")
+                for d in load_thing(t, "index").get("dataset", [])
+            ]
         ),
         default="",
     ) or date.today().isoformat()

@@ -14,7 +14,7 @@
     {
       "@type": "Dataset",
       "name": "organization",
-      "url": "organization.json",
+      "url": "entity.json",
       "encodingFormat": "application/json"
     },
     {
@@ -41,5 +41,7 @@
       "url": "sites.json",
       "encodingFormat": "application/json"
     }
-  ]
+  ],
+  "kind": "Organization",
+  "description": "BRISECOM SL"
 }
