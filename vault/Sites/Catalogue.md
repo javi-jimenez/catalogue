@@ -1,14 +1,14 @@
 ---
-id: "https://github.com/javi-jimenez/brisecom-catalogue"
+id: "https://github.com/javi-jimenez/catalogue"
 type: "site"
 name: "Catalogue"
-url: "https://github.com/javi-jimenez/brisecom-catalogue"
-purpose: "This metadata repository: the source of truth the sites read"
+url: "https://github.com/javi-jimenez/catalogue"
+purpose: "Metadata catalogue: services, prices, people, organisation and sites. Source of truth the sites read"
 tech: "Git + JSON"
-repository: "https://github.com/javi-jimenez/brisecom-catalogue"
+repository: "https://github.com/javi-jimenez/catalogue"
 public: true
 ---
 
 # Catalogue
 
-This metadata repository: the source of truth the sites read
+Metadata catalogue: services, prices, people, organisation and sites. Source of truth the sites read

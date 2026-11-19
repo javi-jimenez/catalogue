@@ -28,7 +28,7 @@ OUT = ROOT / "docs"
 # Dónde se sirve el sitio. Se puede sobreescribir con --base-url o con la
 # variable CATALOGUE_BASE_URL, p. ej. si se publica bajo otro dominio.
 DEFAULT_BASE = os.environ.get(
-    "CATALOGUE_BASE_URL", "https://javi-jimenez.github.io/brisecom-catalogue"
+    "CATALOGUE_BASE_URL", "https://javi-jimenez.github.io/catalogue"
 ).rstrip("/")
 
 DATASETS = {
@@ -168,7 +168,7 @@ consumer does not have to invent a mapping. Fetch, parse, use.</p>
 
 <p class="muted">Last modified {modified}. Text and data licensed
 CC BY-NC-SA 4.0. Generated from
-<a href="https://github.com/javi-jimenez/brisecom-catalogue">the catalogue repo</a>.</p>
+<a href="https://github.com/javi-jimenez/catalogue">the catalogue repo</a>.</p>
 </body>
 </html>
 """

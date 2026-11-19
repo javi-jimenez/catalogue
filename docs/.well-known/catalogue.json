@@ -3,7 +3,7 @@
   "@type": "DataCatalog",
   "name": "BRISECOM catalogue",
   "catalogue": "BRISECOM",
-  "manifest": "https://javi-jimenez.github.io/brisecom-catalogue/index.json",
+  "manifest": "https://javi-jimenez.github.io/catalogue/index.json",
   "format": "application/json",
   "schema": "https://schema.org",
   "datasets": [

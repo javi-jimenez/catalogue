@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://javi-jimenez.github.io/brisecom-catalogue/</loc><lastmod>2026-11-19</lastmod></url>
-  <url><loc>https://javi-jimenez.github.io/brisecom-catalogue/index.json</loc><lastmod>2026-11-19</lastmod></url>
-  <url><loc>https://javi-jimenez.github.io/brisecom-catalogue/data/organization.json</loc><lastmod>2026-11-19</lastmod></url>
-  <url><loc>https://javi-jimenez.github.io/brisecom-catalogue/data/people.json</loc><lastmod>2026-11-19</lastmod></url>
-  <url><loc>https://javi-jimenez.github.io/brisecom-catalogue/data/services.json</loc><lastmod>2026-11-19</lastmod></url>
-  <url><loc>https://javi-jimenez.github.io/brisecom-catalogue/data/promotions.json</loc><lastmod>2026-11-19</lastmod></url>
-  <url><loc>https://javi-jimenez.github.io/brisecom-catalogue/data/sites.json</loc><lastmod>2026-11-19</lastmod></url>
-  <url><loc>https://javi-jimenez.github.io/brisecom-catalogue/data/services/entry.json</loc><lastmod>2026-11-19</lastmod></url>
-  <url><loc>https://javi-jimenez.github.io/brisecom-catalogue/data/services/map-block.json</loc><lastmod>2026-11-19</lastmod></url>
-  <url><loc>https://javi-jimenez.github.io/brisecom-catalogue/data/services/business-audit.json</loc><lastmod>2026-11-19</lastmod></url>
-  <url><loc>https://javi-jimenez.github.io/brisecom-catalogue/data/services/market-audit.json</loc><lastmod>2026-11-19</lastmod></url>
-  <url><loc>https://javi-jimenez.github.io/brisecom-catalogue/data/services/audit-areas.json</loc><lastmod>2026-11-19</lastmod></url>
-  <url><loc>https://javi-jimenez.github.io/brisecom-catalogue/data/services/market-pieces.json</loc><lastmod>2026-11-19</lastmod></url>
-  <url><loc>https://javi-jimenez.github.io/brisecom-catalogue/data/services/protection.json</loc><lastmod>2026-11-19</lastmod></url>
+  <url><loc>https://javi-jimenez.github.io/catalogue/</loc><lastmod>2026-11-19</lastmod></url>
+  <url><loc>https://javi-jimenez.github.io/catalogue/index.json</loc><lastmod>2026-11-19</lastmod></url>
+  <url><loc>https://javi-jimenez.github.io/catalogue/data/organization.json</loc><lastmod>2026-11-19</lastmod></url>
+  <url><loc>https://javi-jimenez.github.io/catalogue/data/people.json</loc><lastmod>2026-11-19</lastmod></url>
+  <url><loc>https://javi-jimenez.github.io/catalogue/data/services.json</loc><lastmod>2026-11-19</lastmod></url>
+  <url><loc>https://javi-jimenez.github.io/catalogue/data/promotions.json</loc><lastmod>2026-11-19</lastmod></url>
+  <url><loc>https://javi-jimenez.github.io/catalogue/data/sites.json</loc><lastmod>2026-11-19</lastmod></url>
+  <url><loc>https://javi-jimenez.github.io/catalogue/data/services/entry.json</loc><lastmod>2026-11-19</lastmod></url>
+  <url><loc>https://javi-jimenez.github.io/catalogue/data/services/map-block.json</loc><lastmod>2026-11-19</lastmod></url>
+  <url><loc>https://javi-jimenez.github.io/catalogue/data/services/business-audit.json</loc><lastmod>2026-11-19</lastmod></url>
+  <url><loc>https://javi-jimenez.github.io/catalogue/data/services/market-audit.json</loc><lastmod>2026-11-19</lastmod></url>
+  <url><loc>https://javi-jimenez.github.io/catalogue/data/services/audit-areas.json</loc><lastmod>2026-11-19</lastmod></url>
+  <url><loc>https://javi-jimenez.github.io/catalogue/data/services/market-pieces.json</loc><lastmod>2026-11-19</lastmod></url>
+  <url><loc>https://javi-jimenez.github.io/catalogue/data/services/protection.json</loc><lastmod>2026-11-19</lastmod></url>
 </urlset>

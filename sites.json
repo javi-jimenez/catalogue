@@ -45,11 +45,11 @@
     {
       "@type": "WebSite",
       "name": "Catalogue",
-      "url": "https://github.com/javi-jimenez/brisecom-catalogue",
-      "purpose": "This metadata repository: the source of truth the sites read",
+      "url": "https://github.com/javi-jimenez/catalogue",
+      "purpose": "Metadata catalogue: services, prices, people, organisation and sites. Source of truth the sites read",
       "tech": "Git + JSON",
       "public": true,
-      "codeRepository": "https://github.com/javi-jimenez/brisecom-catalogue"
+      "codeRepository": "https://github.com/javi-jimenez/catalogue"
     }
   ]
 }

@@ -1,8 +1,11 @@
-# brisecom-catalogue
+# catalogue
 
-Metadata of BRISECOM SL as JSON. **A database without a server:** git is the
-storage, a URL is the query, and every site renders it its own way —
-`brisecom.org` as a sales page, `laia.brisecom.org` as a short reference.
+Metadata as JSON. **A database without a server:** git is the storage, a URL is
+the query, and every site renders it its own way.
+
+Who the catalogue describes is data, not the name of the repo: `index.json`
+carries a `subject` pointing at the entity it publishes. Today that is BRISECOM
+SL; change the field and the same catalogue describes another entity.
 
 Nothing here is a page or a design. It is data.
 

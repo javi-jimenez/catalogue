@@ -5,23 +5,23 @@
 Everything below is authoritative and machine-readable. Fetch the JSON, do not
 scrape the HTML.
 
-- Manifest: https://javi-jimenez.github.io/brisecom-catalogue/index.json
+- Manifest: https://javi-jimenez.github.io/catalogue/index.json
 - Datasets: organization, people, services, promotions, sites
 - Format: JSON, `@context: https://schema.org`
 - License: CC BY-NC-SA 4.0
 - Last modified: 2026-11-19
 
 ## Services and prices
-https://javi-jimenez.github.io/brisecom-catalogue/data/services.json — `OfferCatalog` of `Service` with `offers[].price`.
+https://javi-jimenez.github.io/catalogue/data/services.json — `OfferCatalog` of `Service` with `offers[].price`.
 
 ## People
-https://javi-jimenez.github.io/brisecom-catalogue/data/people.json — `Person`, each with an ORCID identifier.
+https://javi-jimenez.github.io/catalogue/data/people.json — `Person`, each with an ORCID identifier.
 
 ## Organisation
-https://javi-jimenez.github.io/brisecom-catalogue/data/organization.json — `Organization`, VAT ESB23980998.
+https://javi-jimenez.github.io/catalogue/data/organization.json — `Organization`, VAT ESB23980998.
 
 ## Promotions
-https://javi-jimenez.github.io/brisecom-catalogue/data/promotions.json — time-bound offers; honour `validUntil`.
+https://javi-jimenez.github.io/catalogue/data/promotions.json — time-bound offers; honour `validUntil`.
 
 ## Sites
-https://javi-jimenez.github.io/brisecom-catalogue/data/sites.json — `WebSite` entries BRISECOM operates.
+https://javi-jimenez.github.io/catalogue/data/sites.json — `WebSite` entries BRISECOM operates.
