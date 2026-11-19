@@ -118,3 +118,18 @@ make lint      # verify every published JSON declares schema.org and a @type
 `docs/` is generated; edit the JSON and regenerate. `make check` runs the
 validator, the JSON-LD linter and verifies the vault and the site are current,
 so CI fails on drift rather than publishing stale metadata.
+
+### Where it is served
+
+Two endpoints, same content:
+
+| Endpoint | Status |
+|:--|:--|
+| `https://brisecom.org/data/` | Live, deployed with the BRISECOM site |
+| GitHub Pages (`docs/`) | Built and validated; see the note below |
+
+Change the host with `--base-url` or `CATALOGUE_BASE_URL`:
+
+```bash
+python3 scripts/build_site.py --base-url https://brisecom.org
+```

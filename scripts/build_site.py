@@ -17,6 +17,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import sys
 from datetime import date
 from pathlib import Path
@@ -24,7 +25,11 @@ from xml.sax.saxutils import escape
 
 ROOT = Path(__file__).resolve().parent.parent
 OUT = ROOT / "docs"
-BASE_URL = "https://javi-jimenez.github.io/brisecom-catalogue"
+# Dónde se sirve el sitio. Se puede sobreescribir con --base-url o con la
+# variable CATALOGUE_BASE_URL, p. ej. si se publica bajo otro dominio.
+DEFAULT_BASE = os.environ.get(
+    "CATALOGUE_BASE_URL", "https://javi-jimenez.github.io/brisecom-catalogue"
+).rstrip("/")
 
 DATASETS = {
     "organization": "Legal identity, VAT, address and founder",
@@ -39,14 +44,14 @@ def load(name: str) -> dict:
     return json.loads((ROOT / f"{name}.json").read_text(encoding="utf-8"))
 
 
-def build() -> dict[Path, str]:
+def build(base: str) -> dict[Path, str]:
     files: dict[Path, str] = {}
     manifest = load("index")
 
     # El manifiesto se publica tal cual, con URLs absolutas de datos.
     published_manifest = dict(manifest)
     published_manifest["distribution"] = [
-        {**d, "contentUrl": f"{BASE_URL}/data/{d['contentUrl'].replace('.json','')}.json"}
+        {**d, "contentUrl": f"{base}/data/{d['contentUrl'].replace('.json','')}.json"}
         for d in manifest.get("distribution", [])
     ]
     files[OUT / "index.json"] = json.dumps(published_manifest, ensure_ascii=False, indent=2) + "\n"
@@ -74,26 +79,26 @@ def build() -> dict[Path, str]:
         (str(load(n).get("dateModified", "")) for n in DATASETS), default=""
     ) or date.today().isoformat()
 
-    files[OUT / "index.html"] = INDEX_HTML.replace("{base}", BASE_URL).replace("{modified}", modified)
+    files[OUT / "index.html"] = INDEX_HTML.replace("{base}", base).replace("{modified}", modified)
     files[OUT / "robots.txt"] = (
         "User-agent: *\n"
         "Allow: /\n"
         "\n"
         "# Machine-readable: every dataset is plain JSON with schema.org types.\n"
-        f"Sitemap: {BASE_URL}/sitemap.xml\n"
+        f"Sitemap: {base}/sitemap.xml\n"
     )
     files[OUT / "sitemap.xml"] = SITEMAP.format(
-        base=BASE_URL,
+        base=base,
         modified=modified,
         urls="".join(
-            [f"  <url><loc>{BASE_URL}/data/{n}.json</loc>"
+            [f"  <url><loc>{base}/data/{n}.json</loc>"
              f"<lastmod>{modified}</lastmod></url>\n" for n in DATASETS]
-            + [f"  <url><loc>{BASE_URL}/data/services/{s['identifier']}.json</loc>"
+            + [f"  <url><loc>{base}/data/services/{s['identifier']}.json</loc>"
                f"<lastmod>{modified}</lastmod></url>\n"
                for s in load("services").get("itemListElement", [])]
         ),
     )
-    files[OUT / "llms.txt"] = LLMS.format(base=BASE_URL, modified=modified)
+    files[OUT / "llms.txt"] = LLMS.format(base=base, modified=modified)
     files[OUT / ".well-known" / "catalogue.json"] = (
         json.dumps(
             {
@@ -101,7 +106,7 @@ def build() -> dict[Path, str]:
                 "@type": "DataCatalog",
                 "name": "BRISECOM catalogue",
                 "catalogue": "BRISECOM",
-                "manifest": f"{BASE_URL}/index.json",
+                "manifest": f"{base}/index.json",
                 "format": "application/json",
                 "schema": "https://schema.org",
                 "datasets": list(DATASETS),
@@ -208,9 +213,15 @@ scrape the HTML.
 def main() -> int:
     ap = argparse.ArgumentParser(description="Genera el sitio de metadatos en docs/.")
     ap.add_argument("--check", action="store_true", help="no escribe; exit 1 si difiere")
+    ap.add_argument(
+        "--base-url",
+        default=DEFAULT_BASE,
+        help=f"URL donde se sirve el sitio (por defecto {DEFAULT_BASE})",
+    )
     args = ap.parse_args()
+    base = args.base_url.rstrip("/")
 
-    files = build()
+    files = build(base)
 
     # JSON-LD de la portada: describe el catálogo entero.
     manifest = load("index")
@@ -223,14 +234,14 @@ def main() -> int:
             "@type": "DataCatalog",
             "name": manifest["name"],
             "description": manifest["description"],
-            "url": f"{BASE_URL}/",
+            "url": f"{base}/",
             "license": manifest.get("license"),
             "dataset": [
                 {
                     "@type": "Dataset",
                     "name": name,
                     "description": desc,
-                    "url": f"{BASE_URL}/data/{name}.json",
+                    "url": f"{base}/data/{name}.json",
                     "encodingFormat": "application/json",
                 }
                 for name, desc in DATASETS.items()
@@ -249,7 +260,7 @@ def main() -> int:
         files[html_path]
         .replace("{jsonld}", jsonld)
         .replace("{rows}", rows)
-        .replace("{base}", BASE_URL)
+        .replace("{base}", base)
         .replace("{modified}", modified)
     )
 
