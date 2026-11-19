@@ -32,8 +32,17 @@ CATALOGUE = ROOT.parent
 VAULT = CATALOGUE / "vault"
 
 
-def load(name: str) -> dict:
-    return json.loads((CATALOGUE / name).read_text(encoding="utf-8"))
+ROOT_INDEX = "index.json"
+
+
+def things() -> list[str]:
+    """Slugs de las entidades declaradas en el índice raíz."""
+    index = json.loads((CATALOGUE / ROOT_INDEX).read_text(encoding="utf-8"))
+    return [t["identifier"] for t in index.get("dataset", [])]
+
+
+def load(name: str, thing: str) -> dict:
+    return json.loads((CATALOGUE / "things" / thing / f"{name}.json").read_text(encoding="utf-8"))
 
 
 def q(value: object) -> str:
@@ -67,16 +76,24 @@ def note(front: dict, title: str, body: str = "") -> str:
 
 def build() -> dict[Path, str]:
     files: dict[Path, str] = {}
-    org = load("organization.json")
-    people = load("people.json")["itemListElement"]
-    services = load("services.json")["itemListElement"]
-    promos = load("promotions.json")["itemListElement"]
-    sites = load("sites.json")["itemListElement"]
+    for thing in things():
+        files.update(build_thing(thing))
+    files[VAULT / "Catalogue.md"] = INDEX_NOTE
+    return files
+
+
+def build_thing(thing: str) -> dict[Path, str]:
+    files: dict[Path, str] = {}
+    org = load("organization", thing)
+    people = load("people", thing)["itemListElement"]
+    services = load("services", thing)["itemListElement"]
+    promos = load("promotions", thing)["itemListElement"]
+    sites = load("sites", thing)["itemListElement"]
     org_id = org["@id"]
 
     # --- organización ---
     address = org.get("address", {})
-    files[VAULT / "Organization" / "BRISECOM.md"] = note(
+    files[VAULT / thing.capitalize() / "Organization" / f"{org['name']}.md"] = note(
         {
             "id": org["@id"],
             "type": "organization",
@@ -97,7 +114,7 @@ def build() -> dict[Path, str]:
     # --- personas ---
     for person in people:
         ident = person.get("identifier") or {}
-        files[VAULT / "People" / f"{person['name']}.md"] = note(
+        files[VAULT / thing.capitalize() / "People" / f"{person['name']}.md"] = note(
             {
                 "id": person["@id"],
                 "type": "person",
@@ -116,7 +133,7 @@ def build() -> dict[Path, str]:
     for svc in services:
         offer = svc.get("offers") or {}
         display = svc.get("display") or {}
-        files[VAULT / "Services" / f"{svc['identifier']}.md"] = note(
+        files[VAULT / thing.capitalize() / "Services" / f"{svc['identifier']}.md"] = note(
             {
                 "id": svc["identifier"],
                 "type": "service",
@@ -139,7 +156,7 @@ def build() -> dict[Path, str]:
     # --- promociones ---
     for promo in promos:
         offer = promo.get("offers") or {}
-        files[VAULT / "Promotions" / f"{promo['identifier']}.md"] = note(
+        files[VAULT / thing.capitalize() / "Promotions" / f"{promo['identifier']}.md"] = note(
             {
                 "id": promo["identifier"],
                 "type": "promotion",
@@ -156,7 +173,7 @@ def build() -> dict[Path, str]:
 
     # --- sitios ---
     for site in sites:
-        files[VAULT / "Sites" / f"{site['name']}.md"] = note(
+        files[VAULT / thing.capitalize() / "Sites" / f"{site['name']}.md"] = note(
             {
                 "id": site["url"],
                 "type": "site",
@@ -172,7 +189,6 @@ def build() -> dict[Path, str]:
         )
 
     files[VAULT / "Services.base"] = BASE_FILE
-    files[VAULT / "Catalogue.md"] = INDEX_NOTE
     return files
 
 
@@ -217,7 +233,7 @@ y se regenera con `python3 scripts/vault_export.py`.
 
 ```dataview
 TABLE price, currency, duration_hours
-FROM "Services"
+FROM "Brisecom/Services"
 WHERE type = "service"
 SORT order ASC
 ```

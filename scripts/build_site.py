@@ -36,7 +36,7 @@ DATASETS = {
     "people": "People with their ORCID and public profiles",
     "services": "Service catalogue with prices",
     "promotions": "Time-bound offers with validUntil",
-    "sites": "Sites BRISECOM operates",
+    "sites": "Sites the entity operates",
 }
 
 
@@ -44,42 +44,75 @@ def load(name: str) -> dict:
     return json.loads((ROOT / f"{name}.json").read_text(encoding="utf-8"))
 
 
+def things() -> list[str]:
+    return [t["identifier"] for t in load("index").get("dataset", [])]
+
+
+def load_thing(thing: str, name: str) -> dict:
+    return json.loads(
+        (ROOT / "things" / thing / f"{name}.json").read_text(encoding="utf-8")
+    )
+
+
 def build(base: str) -> dict[Path, str]:
     files: dict[Path, str] = {}
-    manifest = load("index")
+    index = load("index")
+    names = things()
 
-    # El manifiesto se publica tal cual, con URLs absolutas de datos.
-    published_manifest = dict(manifest)
-    published_manifest["distribution"] = [
-        {**d, "contentUrl": f"{base}/data/{d['contentUrl'].replace('.json','')}.json"}
-        for d in manifest.get("distribution", [])
-    ]
-    files[OUT / "index.json"] = json.dumps(published_manifest, ensure_ascii=False, indent=2) + "\n"
-
-    for name in DATASETS:
-        data = load(name)
-        files[OUT / "data" / f"{name}.json"] = (
-            json.dumps(data, ensure_ascii=False, indent=2) + "\n"
-        )
-
-    # Un fichero por servicio: una URL por hecho, que es lo que hace cómoda
-    # una consulta desde una app o un agente (no hay que recorrer el catálogo).
-    services = load("services")
-    for svc in services.get("itemListElement", []):
-        ident = svc["identifier"]
-        single = {
-            "@context": "https://schema.org",
-            **{k: v for k, v in svc.items() if k != "@context"},
+    # Índice raíz publicado, con URLs absolutas.
+    published = dict(index)
+    published["dataset"] = [
+        {
+            **t,
+            "url": f"{base}/{t['url']}",
+            "manifest": f"{base}/things/{t['identifier']}/index.json",
+            "dataset": [
+                {**d, "url": f"{base}/{d['url']}"} for d in t.get("dataset", [])
+            ],
         }
-        files[OUT / "data" / "services" / f"{ident}.json"] = (
-            json.dumps(single, ensure_ascii=False, indent=2) + "\n"
+        for t in index.get("dataset", [])
+    ]
+    files[OUT / "index.json"] = json.dumps(published, ensure_ascii=False, indent=2) + "\n"
+
+    modified_all: list[str] = []
+    sitemap_urls: list[str] = []
+
+    for thing in names:
+        manifest = load_thing(thing, "index")
+        files[OUT / "things" / thing / "index.json"] = (
+            json.dumps(manifest, ensure_ascii=False, indent=2) + "\n"
         )
+        sitemap_urls.append(f"  <url><loc>{base}/things/{thing}/index.json</loc></url>\n")
 
-    modified = max(
-        (str(load(n).get("dateModified", "")) for n in DATASETS), default=""
-    ) or date.today().isoformat()
+        for name in DATASETS:
+            data = load_thing(thing, name)
+            modified_all.append(str(data.get("dateModified", "")))
+            files[OUT / "things" / thing / f"{name}.json"] = (
+                json.dumps(data, ensure_ascii=False, indent=2) + "\n"
+            )
+            sitemap_urls.append(
+                f"  <url><loc>{base}/things/{thing}/{name}.json</loc></url>\n"
+            )
 
-    files[OUT / "index.html"] = INDEX_HTML.replace("{base}", base).replace("{modified}", modified)
+        # Una URL por servicio: el hecho aislado, sin recorrer el catálogo.
+        for svc in load_thing(thing, "services").get("itemListElement", []):
+            ident = svc["identifier"]
+            single = {
+                "@context": "https://schema.org",
+                **{k: v for k, v in svc.items() if k != "@context"},
+            }
+            files[OUT / "things" / thing / "services" / f"{ident}.json"] = (
+                json.dumps(single, ensure_ascii=False, indent=2) + "\n"
+            )
+            sitemap_urls.append(
+                f"  <url><loc>{base}/things/{thing}/services/{ident}.json</loc></url>\n"
+            )
+
+    modified = max([m for m in modified_all if m], default="") or date.today().isoformat()
+
+    files[OUT / "index.html"] = (
+        INDEX_HTML.replace("{base}", base).replace("{modified}", modified)
+    )
     files[OUT / "robots.txt"] = (
         "User-agent: *\n"
         "Allow: /\n"
@@ -88,30 +121,24 @@ def build(base: str) -> dict[Path, str]:
         f"Sitemap: {base}/sitemap.xml\n"
     )
     files[OUT / "sitemap.xml"] = SITEMAP.format(
-        base=base,
-        modified=modified,
-        urls="".join(
-            [f"  <url><loc>{base}/data/{n}.json</loc>"
-             f"<lastmod>{modified}</lastmod></url>\n" for n in DATASETS]
-            + [f"  <url><loc>{base}/data/services/{s['identifier']}.json</loc>"
-               f"<lastmod>{modified}</lastmod></url>\n"
-               for s in load("services").get("itemListElement", [])]
-        ),
+        base=base, modified=modified, urls="".join(sitemap_urls)
     )
-    files[OUT / "llms.txt"] = LLMS.format(base=base, modified=modified)
+    files[OUT / "llms.txt"] = LLMS.format(
+        base=base, modified=modified, things=", ".join(names)
+    )
     files[OUT / ".well-known" / "catalogue.json"] = (
         json.dumps(
             {
                 "@context": "https://schema.org",
                 "@type": "DataCatalog",
-                "name": "BRISECOM catalogue",
-                "catalogue": "BRISECOM",
+                "name": "Catalogue",
                 "manifest": f"{base}/index.json",
                 "format": "application/json",
                 "schema": "https://schema.org",
+                "things": names,
                 "datasets": list(DATASETS),
-                "version": manifest.get("version"),
-                "license": manifest.get("license"),
+                "version": index.get("version"),
+                "license": index.get("license"),
             },
             ensure_ascii=False,
             indent=2,
@@ -188,7 +215,8 @@ Everything below is authoritative and machine-readable. Fetch the JSON, do not
 scrape the HTML.
 
 - Manifest: {base}/index.json
-- Datasets: organization, people, services, promotions, sites
+- Things: {things}
+- Datasets per thing: organization, people, services, promotions, sites
 - Format: JSON, `@context: https://schema.org`
 - License: CC BY-NC-SA 4.0
 - Last modified: {modified}
@@ -226,7 +254,12 @@ def main() -> int:
     # JSON-LD de la portada: describe el catálogo entero.
     manifest = load("index")
     modified = max(
-        (str(load(n).get("dateModified", "")) for n in DATASETS), default=""
+        (
+            str(load_thing(t, n).get("dateModified", ""))
+            for t in things()
+            for n in DATASETS
+        ),
+        default="",
     ) or date.today().isoformat()
     jsonld = json.dumps(
         {
@@ -239,22 +272,33 @@ def main() -> int:
             "dataset": [
                 {
                     "@type": "Dataset",
-                    "name": name,
-                    "description": desc,
-                    "url": f"{base}/data/{name}.json",
+                    "name": t.get("name"),
+                    "description": t.get("description"),
+                    "url": f"{base}/things/{t['identifier']}/index.json",
                     "encodingFormat": "application/json",
+                    "keywords": t.get("datasets", []),
                 }
-                for name, desc in DATASETS.items()
+                for t in manifest.get("thing", [])
             ],
         },
         ensure_ascii=False,
         indent=2,
     )
-    rows = "\n".join(
-        f'<tr><td><code>{n}</code></td><td>{escape(d)}</td>'
-        f'<td><a href="data/{n}.json">data/{n}.json</a></td></tr>'
-        for n, d in DATASETS.items()
-    )
+    rows = ""
+    for thing in manifest.get("thing", []):
+        slug = thing["identifier"]
+        rows += (
+            f'<tr><th scope="row"><a href="things/{slug}/">{escape(slug)}</a></th>'
+            f'<td>{escape(str(thing.get("name", "")))}</td>'
+            f'<td>{escape(str(thing.get("kind", "")))}</td></tr>'
+        )
+        for name in thing.get("datasets", []):
+            rows += (
+                f'<tr><td>&nbsp;&nbsp;<code>{name}</code></td>'
+                f'<td>{escape(DATASETS.get(name, ""))}</td>'
+                f'<td><a href="things/{slug}/{name}.json">'
+                f'things/{slug}/{name}.json</a></td></tr>'
+            )
     html_path = next(k for k in files if k.name == "index.html")
     files[html_path] = (
         files[html_path]

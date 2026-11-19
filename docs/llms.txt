@@ -6,7 +6,8 @@ Everything below is authoritative and machine-readable. Fetch the JSON, do not
 scrape the HTML.
 
 - Manifest: https://javi-jimenez.github.io/catalogue/index.json
-- Datasets: organization, people, services, promotions, sites
+- Things: brisecom
+- Datasets per thing: organization, people, services, promotions, sites
 - Format: JSON, `@context: https://schema.org`
 - License: CC BY-NC-SA 4.0
 - Last modified: 2026-11-19

@@ -12,7 +12,7 @@ y se regenera con `python3 scripts/vault_export.py`.
 
 ```dataview
 TABLE price, currency, duration_hours
-FROM "Services"
+FROM "Brisecom/Services"
 WHERE type = "service"
 SORT order ASC
 ```

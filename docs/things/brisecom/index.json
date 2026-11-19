@@ -1,0 +1,45 @@
+{
+  "@context": "https://schema.org",
+  "@type": "DataCatalog",
+  "name": "BRISECOM SL",
+  "about": {
+    "@type": "Organization",
+    "@id": "https://brisecom.org/#organization",
+    "name": "BRISECOM SL"
+  },
+  "url": "things/brisecom/",
+  "version": "1.0",
+  "dateModified": "2026-11-19",
+  "dataset": [
+    {
+      "@type": "Dataset",
+      "name": "organization",
+      "url": "organization.json",
+      "encodingFormat": "application/json"
+    },
+    {
+      "@type": "Dataset",
+      "name": "people",
+      "url": "people.json",
+      "encodingFormat": "application/json"
+    },
+    {
+      "@type": "Dataset",
+      "name": "services",
+      "url": "services.json",
+      "encodingFormat": "application/json"
+    },
+    {
+      "@type": "Dataset",
+      "name": "promotions",
+      "url": "promotions.json",
+      "encodingFormat": "application/json"
+    },
+    {
+      "@type": "Dataset",
+      "name": "sites",
+      "url": "sites.json",
+      "encodingFormat": "application/json"
+    }
+  ]
+}

@@ -7,7 +7,8 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-SOURCES = ["organization", "people", "services", "promotions", "sites", "index"]
+ROOT_SOURCES = ["index"]
+THING_SOURCES = ["index", "organization", "people", "services", "promotions", "sites"]
 errors: list[str] = []
 
 
@@ -23,12 +24,22 @@ def check(path: Path, *, require_type: bool = True) -> None:
         errors.append(f"{path}: sin @type")
 
 
-for name in SOURCES:
+for name in ROOT_SOURCES:
     path = ROOT / f"{name}.json"
     if not path.exists():
         errors.append(f"falta {name}.json")
         continue
     check(path)
+
+for folder in sorted((ROOT / "things").iterdir()):
+    if not folder.is_dir():
+        continue
+    for name in THING_SOURCES:
+        path = folder / f"{name}.json"
+        if not path.exists():
+            errors.append(f"falta things/{folder.name}/{name}.json")
+            continue
+        check(path)
 
 for path in sorted((ROOT / "docs").rglob("*.json")):
     check(path)

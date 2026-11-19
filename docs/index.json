@@ -1,51 +1,54 @@
 {
   "@context": "https://schema.org",
-  "@type": "Dataset",
+  "@type": "DataCatalog",
   "@id": "https://brisecom.org/#catalogue",
   "name": "Catalogue",
-  "description": "Metadata of BRISECOM SL as JSON: services, prices, promotions, people, organisation and sites. A database without a server: git is the storage, a URL is the query.",
+  "description": "A catalogue of things — companies, projects or any entity — and their metadata as JSON: services and prices, promotions, people, organisation and sites. A database without a server: git is the storage, a URL is the query.",
   "url": "https://brisecom.org/data/",
   "license": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
-  "version": "1.0",
+  "version": "4.0",
   "dateModified": "2026-11-19",
-  "publisher": {
-    "@id": "https://brisecom.org/#organization"
-  },
-  "distribution": [
+  "dataset": [
     {
-      "@type": "DataDownload",
-      "name": "organisation",
-      "contentUrl": "https://javi-jimenez.github.io/catalogue/data/organization.json",
-      "description": "Legal identity, VAT, address, contact and the person behind it"
-    },
-    {
-      "@type": "DataDownload",
-      "name": "people",
-      "contentUrl": "https://javi-jimenez.github.io/catalogue/data/people.json",
-      "description": "People with their ORCID and public profiles"
-    },
-    {
-      "@type": "DataDownload",
-      "name": "services",
-      "contentUrl": "https://javi-jimenez.github.io/catalogue/data/services.json",
-      "description": "The service catalogue with prices (OfferCatalog)"
-    },
-    {
-      "@type": "DataDownload",
-      "name": "promotions",
-      "contentUrl": "https://javi-jimenez.github.io/catalogue/data/promotions.json",
-      "description": "Time-bound offers, each with validUntil"
-    },
-    {
-      "@type": "DataDownload",
-      "name": "sites",
-      "contentUrl": "https://javi-jimenez.github.io/catalogue/data/sites.json",
-      "description": "Registry of the sites BRISECOM operates"
+      "@type": "DataCatalog",
+      "identifier": "brisecom",
+      "name": "BRISECOM SL",
+      "about": {
+        "@type": "Organization",
+        "@id": "https://brisecom.org/#organization",
+        "name": "BRISECOM SL"
+      },
+      "kind": "Organization",
+      "description": "Metadata of BRISECOM SL",
+      "url": "https://javi-jimenez.github.io/catalogue/things/brisecom/",
+      "dataset": [
+        {
+          "@type": "Dataset",
+          "name": "organization",
+          "url": "https://javi-jimenez.github.io/catalogue/things/brisecom/organization.json"
+        },
+        {
+          "@type": "Dataset",
+          "name": "people",
+          "url": "https://javi-jimenez.github.io/catalogue/things/brisecom/people.json"
+        },
+        {
+          "@type": "Dataset",
+          "name": "services",
+          "url": "https://javi-jimenez.github.io/catalogue/things/brisecom/services.json"
+        },
+        {
+          "@type": "Dataset",
+          "name": "promotions",
+          "url": "https://javi-jimenez.github.io/catalogue/things/brisecom/promotions.json"
+        },
+        {
+          "@type": "Dataset",
+          "name": "sites",
+          "url": "https://javi-jimenez.github.io/catalogue/things/brisecom/sites.json"
+        }
+      ],
+      "manifest": "https://javi-jimenez.github.io/catalogue/things/brisecom/index.json"
     }
-  ],
-  "subject": {
-    "@id": "https://brisecom.org/#organization",
-    "name": "BRISECOM SL",
-    "note": "Cambiar este campo para publicar el catálogo de otra entidad."
-  }
+  ]
 }

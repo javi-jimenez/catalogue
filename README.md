@@ -19,21 +19,50 @@ It is also already typed: every file carries `@context`/`@type` from
 [schema.org](https://schema.org), so a site can use it as structured data
 without inventing a mapping.
 
-## Datasets
+## Structure
+
+A catalogue of **things** — a `Thing` in schema.org is the root type, so a
+company, a person and a project all fit without inventing a taxonomy.
+
+```
+index.json                          DataCatalog  → dataset[] (one per thing)
+things/<slug>/index.json            DataCatalog  → about: the thing, dataset[]: its files
+things/<slug>/organization.json     Organization
+things/<slug>/people.json           ItemList of Person
+things/<slug>/services.json         OfferCatalog of Service with offers
+things/<slug>/promotions.json       ItemList of PromotionalOffer
+things/<slug>/sites.json            ItemList of WebSite
+```
+
+Adding a company, a project or a person is adding a directory and one entry in
+`index.json`. Nothing else changes.
+
+Each entry declares its schema.org classification, and the validator enforces
+that `kind` and `about.@type` agree:
+
+```json
+{
+  "@type": "DataCatalog",
+  "identifier": "brisecom",
+  "kind": "Organization",
+  "about": { "@type": "Organization", "@id": "https://brisecom.org/#organization" }
+}
+```
+
+## Datasets per thing
 
 | File | What it holds | schema.org |
 |:--|:--|:--|
-| [`organization.json`](organization.json) | Legal identity, VAT, address, contact, founder | `Organization` |
-| [`people.json`](people.json) | People with their ORCID and public profiles | `Person` |
-| [`services.json`](services.json) | The service catalogue with prices | `OfferCatalog` → `Service` → `Offer` |
-| [`promotions.json`](promotions.json) | Time-bound offers, each with `validUntil` | `PromotionalOffer` |
-| [`sites.json`](sites.json) | Registry of the sites BRISECOM operates | `WebSite` |
-| [`index.json`](index.json) | Manifest: what exists and where | `Dataset` |
+| `organization.json` | Legal identity, VAT, address, contact, founder | `Organization` |
+| `people.json` | People with their ORCID and public profiles | `ItemList` → `Person` |
+| `services.json` | The service catalogue with prices | `OfferCatalog` → `Service` → `Offer` |
+| `promotions.json` | Time-bound offers, each with `validUntil` | `ItemList` → `PromotionalOffer` |
+| `sites.json` | Registry of the sites the thing operates | `ItemList` → `WebSite` |
 
 ## How it is consumed
 
 ```
-  this repo  ──►  brisecom.org/data/*.json  ──►  consumers
+  this repo  ──►  brisecom.org/data/  ──►  consumers
   (source)        (synced on build)             (fetched at build, vendored)
 ```
 
@@ -102,13 +131,14 @@ a web app, a script, an AI agent — can query the facts over plain HTTP:
 
 | URL | What |
 |:--|:--|
-| `/index.json` | Manifest: datasets and their URLs |
-| `/data/services.json` | ``OfferCatalog`` with prices |
-| `/data/services/<id>.json` | One `Service`, one URL — no need to walk the list |
-| `/data/people.json` | `Person` with ORCID |
-| `/data/organization.json` | `Organization` with VAT |
-| `/data/promotions.json` | Offers, each with `validUntil` |
-| `/data/sites.json` | Sites operated |
+| `/index.json` | `DataCatalog`: the things and their URLs |
+| `/things/<slug>/index.json` | `DataCatalog` of one thing |
+| `/things/<slug>/services.json` | `OfferCatalog` with prices |
+| `/things/<slug>/services/<id>.json` | One `Service`, one URL — no need to walk the list |
+| `/things/<slug>/people.json` | `Person` with ORCID |
+| `/things/<slug>/organization.json` | `Organization` with VAT |
+| `/things/<slug>/promotions.json` | Offers, each with `validUntil` |
+| `/things/<slug>/sites.json` | Sites operated |
 | `/llms.txt` | Plain summary for AI agents |
 | `/sitemap.xml`, `/robots.txt` | Crawler entry points |
 | `/.well-known/catalogue.json` | Machine discovery |
