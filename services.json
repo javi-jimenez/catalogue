@@ -68,7 +68,13 @@
         },
         "description": "Free"
       },
-      "estimatedDuration": "PT1H"
+      "estimatedDuration": "PT1H",
+      "display": {
+        "orderLabel": "0",
+        "durationLabel": "1 h",
+        "priceLabel": "0 €",
+        "priceNote": null
+      }
     },
     {
       "@type": "Service",
@@ -107,7 +113,13 @@
         },
         "description": "60 €/hour"
       },
-      "estimatedDuration": "PT4H"
+      "estimatedDuration": "PT4H",
+      "display": {
+        "orderLabel": "1",
+        "durationLabel": "4 h",
+        "priceLabel": "240 €",
+        "priceNote": "60 €/hour"
+      }
     },
     {
       "@type": "Service",
@@ -146,7 +158,13 @@
         },
         "description": "3 × 8 h blocks"
       },
-      "estimatedDuration": "PT24H"
+      "estimatedDuration": "PT24H",
+      "display": {
+        "orderLabel": "2",
+        "durationLabel": "3 × 8 h",
+        "priceLabel": "1,440 €",
+        "priceNote": null
+      }
     },
     {
       "@type": "Service",
@@ -185,7 +203,13 @@
         },
         "description": "3 × 8 h blocks"
       },
-      "estimatedDuration": "PT24H"
+      "estimatedDuration": "PT24H",
+      "display": {
+        "orderLabel": "3",
+        "durationLabel": "3 × 8 h",
+        "priceLabel": "1,440 €",
+        "priceNote": null
+      }
     },
     {
       "@type": "Service",
@@ -229,7 +253,13 @@
         },
         "description": "1,440 € the three"
       },
-      "estimatedDuration": "PT8H"
+      "estimatedDuration": "PT8H",
+      "display": {
+        "orderLabel": "4–6",
+        "durationLabel": "8 h each",
+        "priceLabel": "480 €/area",
+        "priceNote": "1,440 € the three"
+      }
     },
     {
       "@type": "Service",
@@ -273,7 +303,13 @@
         },
         "description": "1,440 € CORE + FIT + SCALE-UP"
       },
-      "estimatedDuration": "PT8H"
+      "estimatedDuration": "PT8H",
+      "display": {
+        "orderLabel": "7–9",
+        "durationLabel": "8 h each",
+        "priceLabel": "480 €/piece",
+        "priceNote": "1,440 € CORE + FIT + SCALE-UP"
+      }
     },
     {
       "@type": "Service",
@@ -312,7 +348,13 @@
         },
         "description": "written report +60 €"
       },
-      "estimatedDuration": "PT1H"
+      "estimatedDuration": "PT1H",
+      "display": {
+        "orderLabel": "10",
+        "durationLabel": "1 h / month",
+        "priceLabel": "60 €/month",
+        "priceNote": "written report +60 €"
+      }
     }
   ]
 }

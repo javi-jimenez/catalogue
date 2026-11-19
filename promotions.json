@@ -1,0 +1,64 @@
+{
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  "name": "BRISECOM promotions",
+  "description": "Time-bound offers. The most volatile dataset: every entry carries validUntil and the page it belongs to.",
+  "version": "1.0",
+  "dateModified": "2026-11-19",
+  "itemListElement": [
+    {
+      "@type": "PromotionalOffer",
+      "identifier": "free-first-hour",
+      "name": "The first hour is free",
+      "description": "One hour to talk to the business, identify the problem and delimit it. If it is solved there, there is no charge.",
+      "category": "evergreen",
+      "appliesTo": "https://brisecom.org/services",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "EUR",
+        "priceSpecification": {
+          "@type": "UnitPriceSpecification",
+          "price": "0",
+          "priceCurrency": "EUR",
+          "unitText": "first hour"
+        }
+      },
+      "validUntil": null
+    },
+    {
+      "@type": "PromotionalOffer",
+      "identifier": "launch-50",
+      "name": "Launch offer: 50% off",
+      "description": "50% off for the first contract of each new client only. Paid in advance.",
+      "category": "launch",
+      "appliesTo": "https://brisecom.org/carta/",
+      "discount": {
+        "@type": "QuantitativeValue",
+        "value": 50,
+        "unitText": "percent"
+      },
+      "validUntil": "2027-02-15"
+    },
+    {
+      "@type": "PromotionalOffer",
+      "identifier": "diagnostic-express",
+      "name": "Diagnostic EXPRESS",
+      "description": "Eight hours that identify risks, problems, critical points and priorities, with a written report.",
+      "category": "package",
+      "appliesTo": "https://brisecom.org/services",
+      "offers": {
+        "@type": "Offer",
+        "price": "480",
+        "priceCurrency": "EUR",
+        "priceSpecification": {
+          "@type": "UnitPriceSpecification",
+          "price": "480",
+          "priceCurrency": "EUR",
+          "unitText": "8 hours"
+        }
+      },
+      "validUntil": null
+    }
+  ]
+}
