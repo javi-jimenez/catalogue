@@ -82,14 +82,16 @@ The root entry for the same thing is three fields and nothing else:
 
 ## How it is consumed
 
+Everything comes from this repository. No site hosts a copy: the catalogue is
+published once, from here, and every consumer reads it from the same place.
+
 ```
-  this repo  ──►  brisecom.org/data/  ──►  consumers
-  (source)        (synced on build)             (fetched at build, vendored)
+  this repo (source)  ──►  GitHub Pages (published)  ──►  consumers
 ```
 
-Published under <https://brisecom.org/data/>, so any site — or a local dev
-server — can fetch it over plain HTTP. Consumers keep a vendored copy so a
-build never depends on the network being up.
+The published endpoint is <https://javi-jimenez.github.io/catalogue/>. A site
+that needs the data fetches it there; nothing is duplicated and nothing is
+vendored from a second location.
 
 ## Rules
 
@@ -145,6 +147,21 @@ The vault is **read-only**: edit the JSON and regenerate. Each note carries
 To use it, open this repository as a vault in Obsidian (`Open folder as vault` →
 `vault/`), or symlink `vault/` into an existing vault.
 
+## Consumers
+
+There is one catalogue and it lives here. Sites do not keep their own copy:
+they fetch these JSONs at build time, from GitHub.
+
+`brisecom.org` runs a sync before every Hugo build, so `make build` cannot
+compile a page from stale data:
+
+```make
+build: catalogue
+```
+
+If the network is down the sync falls back to its last copy and warns; the
+build never breaks over it.
+
 ## Public metadata endpoint
 
 The repo also publishes itself as a static site (GitHub Pages), so anything —
@@ -179,11 +196,10 @@ Two endpoints, same content:
 
 | Endpoint | Status |
 |:--|:--|
-| `https://brisecom.org/data/` | Live, deployed with the BRISECOM site |
-| GitHub Pages (`docs/`) | Built and validated; see the note below |
+| `https://javi-jimenez.github.io/catalogue/` | Live, generated from `docs/` |
 
-Change the host with `--base-url` or `CATALOGUE_BASE_URL`:
+The base URL is the only thing that changes if the catalogue ever moves:
 
 ```bash
-python3 scripts/build_site.py --base-url https://brisecom.org
+python3 scripts/build_site.py --base-url https://example.org/catalogue
 ```
