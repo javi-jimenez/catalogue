@@ -1,0 +1,46 @@
+{
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "@id": "https://brisecom.org/services#map-block",
+  "identifier": "map-block",
+  "order": 1,
+  "category": "Base",
+  "group": "core",
+  "name": "Map block",
+  "description": "One problem, one block: diagnosis, delimitation and the routes to a solution. Other problems that appear on the way are mapped too, not billed twice.",
+  "serviceType": "Business and market advisory",
+  "provider": {
+    "@id": "https://brisecom.org/#organization"
+  },
+  "areaServed": {
+    "@type": "Country",
+    "name": "Spain"
+  },
+  "availableChannel": {
+    "@type": "ServiceChannel",
+    "serviceUrl": "https://brisecom.org/services",
+    "availableLanguage": [
+      "en",
+      "es"
+    ]
+  },
+  "offers": {
+    "@type": "Offer",
+    "priceCurrency": "EUR",
+    "price": "240",
+    "priceSpecification": {
+      "@type": "UnitPriceSpecification",
+      "price": "240",
+      "priceCurrency": "EUR",
+      "unitText": "per 4-hour block"
+    },
+    "description": "60 €/hour"
+  },
+  "estimatedDuration": "PT4H",
+  "display": {
+    "orderLabel": "1",
+    "durationLabel": "4 h",
+    "priceLabel": "240 €",
+    "priceNote": "60 €/hour"
+  }
+}

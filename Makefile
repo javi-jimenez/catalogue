@@ -9,8 +9,10 @@ help:
 	@echo
 	@echo "  make validate   valida JSON, referencias cruzadas y precios"
 	@echo "  make vault      regenera vault/ (notas Markdown para Obsidian)"
-	@echo "  make check      validate + vault al día (para CI)"
-	@echo "  make all        validate + vault"
+	@echo "  make site       genera docs/ (sitio de metadatos para GitHub Pages)"
+	@echo "  make lint       valida el JSON-LD de fuentes y del sitio"
+	@echo "  make check      validate + lint + vault + site al día (para CI)"
+	@echo "  make all        validate + vault + site"
 
 .PHONY: validate
 validate:
@@ -20,10 +22,20 @@ validate:
 vault:
 	@$(PYTHON) scripts/vault_export.py
 
+.PHONY: site
+site:
+	@$(PYTHON) scripts/build_site.py
+
+.PHONY: lint
+lint:
+	@$(PYTHON) scripts/lint_jsonld.py
+
 .PHONY: check
 check:
 	@$(PYTHON) validate.py
+	@$(PYTHON) scripts/lint_jsonld.py
 	@$(PYTHON) scripts/vault_export.py --check
+	@$(PYTHON) scripts/build_site.py --check
 
 .PHONY: all
-all: validate vault
+all: validate vault site

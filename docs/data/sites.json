@@ -1,0 +1,55 @@
+{
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  "name": "BRISECOM sites",
+  "description": "Registry of the websites operated by or for BRISECOM SL.",
+  "version": "1.0",
+  "dateModified": "2026-11-19",
+  "itemListElement": [
+    {
+      "@type": "WebSite",
+      "name": "BRISECOM",
+      "url": "https://brisecom.org/",
+      "purpose": "Company site, service catalogue and sales routes",
+      "tech": "Hugo",
+      "public": true,
+      "codeRepository": "https://github.com/javi-jimenez/brisecom.org"
+    },
+    {
+      "@type": "WebSite",
+      "name": "LAIA",
+      "url": "https://laia.brisecom.org/",
+      "purpose": "LAIA project: whitepapers, research and technical references",
+      "tech": "Hugo",
+      "public": true,
+      "codeRepository": "https://github.com/javi-jimenez/laia.brisecom.org"
+    },
+    {
+      "@type": "WebSite",
+      "name": "BRISECOM Journal",
+      "url": "https://blog.brisecom.org/",
+      "purpose": "Long-form articles and readable versions of the whitepapers",
+      "tech": "Hugo",
+      "public": true,
+      "codeRepository": "https://github.com/javi-jimenez/blog.brisecom.org"
+    },
+    {
+      "@type": "WebSite",
+      "name": "Jiménez Gómez",
+      "url": "https://jimenezgomez.org/",
+      "purpose": "Personal site of the founder",
+      "tech": "Hugo",
+      "public": true,
+      "codeRepository": "https://github.com/javi-jimenez/jimenezgomez.org"
+    },
+    {
+      "@type": "WebSite",
+      "name": "Catalogue",
+      "url": "https://github.com/javi-jimenez/brisecom-catalogue",
+      "purpose": "This metadata repository: the source of truth the sites read",
+      "tech": "Git + JSON",
+      "public": true,
+      "codeRepository": "https://github.com/javi-jimenez/brisecom-catalogue"
+    }
+  ]
+}

@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+# Machine-readable: every dataset is plain JSON with schema.org types.
+Sitemap: https://javi-jimenez.github.io/brisecom-catalogue/sitemap.xml

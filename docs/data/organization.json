@@ -1,0 +1,39 @@
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "@id": "https://brisecom.org/#organization",
+  "name": "BRISECOM SL",
+  "legalName": "BRISECOM SOCIEDAD DE RESPONSABILIDAD LIMITADA",
+  "vatID": "ESB23980998",
+  "url": "https://brisecom.org",
+  "email": "info@brisecom.org",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "40 Calle Colon, 1st floor, unit 1",
+    "postalCode": "46004",
+    "addressLocality": "Valencia",
+    "addressCountry": "ES"
+  },
+  "founder": {
+    "@id": "https://brisecom.org/#person-francisco-javier-jimenez-gomez"
+  },
+  "employee": [
+    {
+      "@id": "https://brisecom.org/#person-francisco-javier-jimenez-gomez"
+    }
+  ],
+  "knowsAbout": [
+    "software architecture",
+    "security audits",
+    "ethical AI",
+    "EU AI Act",
+    "ENS"
+  ],
+  "sameAs": [
+    "https://laia.brisecom.org/",
+    "https://blog.brisecom.org/",
+    "https://github.com/javi-jimenez"
+  ],
+  "version": "1.0",
+  "dateModified": "2026-11-19"
+}

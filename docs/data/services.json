@@ -1,0 +1,360 @@
+{
+  "@context": "https://schema.org",
+  "@type": "OfferCatalog",
+  "@id": "https://brisecom.org/services#catalog",
+  "name": "BRISECOM — Solution Map",
+  "description": "The first hour is always free. If the problem is not solved there, it is bought as one 4-hour block.",
+  "url": "https://brisecom.org/services",
+  "version": "1.0",
+  "dateModified": "2026-11-19",
+  "currency": "EUR",
+  "provider": {
+    "@type": "Organization",
+    "@id": "https://brisecom.org/#organization",
+    "name": "BRISECOM SL",
+    "url": "https://brisecom.org",
+    "email": "info@brisecom.org",
+    "founder": {
+      "@type": "Person",
+      "name": "Francisco Javier Jiménez Gómez",
+      "identifier": "https://orcid.org/0009-0007-1082-431X"
+    },
+    "sameAs": [
+      "https://laia.brisecom.org/",
+      "https://github.com/javi-jimenez/laia"
+    ]
+  },
+  "entryPoint": {
+    "name": "Solution Map",
+    "summary": "One free hour to talk to the business, identify the problems, delimit them and map how to solve them.",
+    "freeHours": 1,
+    "url": "https://brisecom.org/services"
+  },
+  "itemListElement": [
+    {
+      "@type": "Service",
+      "@id": "https://brisecom.org/services#entry",
+      "identifier": "entry",
+      "order": 0,
+      "category": "Entry",
+      "group": "core",
+      "name": "Initial session",
+      "description": "We listen to the problem, identify it and delimit it. If it is solved here, there is no charge.",
+      "serviceType": "Business and market advisory",
+      "provider": {
+        "@id": "https://brisecom.org/#organization"
+      },
+      "areaServed": {
+        "@type": "Country",
+        "name": "Spain"
+      },
+      "availableChannel": {
+        "@type": "ServiceChannel",
+        "serviceUrl": "https://brisecom.org/services",
+        "availableLanguage": [
+          "en",
+          "es"
+        ]
+      },
+      "offers": {
+        "@type": "Offer",
+        "priceCurrency": "EUR",
+        "price": "0",
+        "priceSpecification": {
+          "@type": "UnitPriceSpecification",
+          "price": "0",
+          "priceCurrency": "EUR",
+          "unitText": "per session"
+        },
+        "description": "Free"
+      },
+      "estimatedDuration": "PT1H",
+      "display": {
+        "orderLabel": "0",
+        "durationLabel": "1 h",
+        "priceLabel": "0 €",
+        "priceNote": null
+      }
+    },
+    {
+      "@type": "Service",
+      "@id": "https://brisecom.org/services#map-block",
+      "identifier": "map-block",
+      "order": 1,
+      "category": "Base",
+      "group": "core",
+      "name": "Map block",
+      "description": "One problem, one block: diagnosis, delimitation and the routes to a solution. Other problems that appear on the way are mapped too, not billed twice.",
+      "serviceType": "Business and market advisory",
+      "provider": {
+        "@id": "https://brisecom.org/#organization"
+      },
+      "areaServed": {
+        "@type": "Country",
+        "name": "Spain"
+      },
+      "availableChannel": {
+        "@type": "ServiceChannel",
+        "serviceUrl": "https://brisecom.org/services",
+        "availableLanguage": [
+          "en",
+          "es"
+        ]
+      },
+      "offers": {
+        "@type": "Offer",
+        "priceCurrency": "EUR",
+        "price": "240",
+        "priceSpecification": {
+          "@type": "UnitPriceSpecification",
+          "price": "240",
+          "priceCurrency": "EUR",
+          "unitText": "per 4-hour block"
+        },
+        "description": "60 €/hour"
+      },
+      "estimatedDuration": "PT4H",
+      "display": {
+        "orderLabel": "1",
+        "durationLabel": "4 h",
+        "priceLabel": "240 €",
+        "priceNote": "60 €/hour"
+      }
+    },
+    {
+      "@type": "Service",
+      "@id": "https://brisecom.org/services#business-audit",
+      "identifier": "business-audit",
+      "order": 2,
+      "category": "Business",
+      "group": "modules",
+      "name": "Integral Business Audit",
+      "description": "Critical review package: applications, regulatory compliance and business model. The full business study, delivered in 24 h.",
+      "serviceType": "Business and market advisory",
+      "provider": {
+        "@id": "https://brisecom.org/#organization"
+      },
+      "areaServed": {
+        "@type": "Country",
+        "name": "Spain"
+      },
+      "availableChannel": {
+        "@type": "ServiceChannel",
+        "serviceUrl": "https://brisecom.org/services",
+        "availableLanguage": [
+          "en",
+          "es"
+        ]
+      },
+      "offers": {
+        "@type": "Offer",
+        "priceCurrency": "EUR",
+        "price": "1440",
+        "priceSpecification": {
+          "@type": "UnitPriceSpecification",
+          "price": "1440",
+          "priceCurrency": "EUR",
+          "unitText": "per audit"
+        },
+        "description": "3 × 8 h blocks"
+      },
+      "estimatedDuration": "PT24H",
+      "display": {
+        "orderLabel": "2",
+        "durationLabel": "3 × 8 h",
+        "priceLabel": "1,440 €",
+        "priceNote": null
+      }
+    },
+    {
+      "@type": "Service",
+      "@id": "https://brisecom.org/services#market-audit",
+      "identifier": "market-audit",
+      "order": 3,
+      "category": "Market",
+      "group": "modules",
+      "name": "Integral Market Audit",
+      "description": "Positioning package: Market Core plus Market Fit. The full market study, delivered in 24 h.",
+      "serviceType": "Business and market advisory",
+      "provider": {
+        "@id": "https://brisecom.org/#organization"
+      },
+      "areaServed": {
+        "@type": "Country",
+        "name": "Spain"
+      },
+      "availableChannel": {
+        "@type": "ServiceChannel",
+        "serviceUrl": "https://brisecom.org/services",
+        "availableLanguage": [
+          "en",
+          "es"
+        ]
+      },
+      "offers": {
+        "@type": "Offer",
+        "priceCurrency": "EUR",
+        "price": "1440",
+        "priceSpecification": {
+          "@type": "UnitPriceSpecification",
+          "price": "1440",
+          "priceCurrency": "EUR",
+          "unitText": "per audit"
+        },
+        "description": "3 × 8 h blocks"
+      },
+      "estimatedDuration": "PT24H",
+      "display": {
+        "orderLabel": "3",
+        "durationLabel": "3 × 8 h",
+        "priceLabel": "1,440 €",
+        "priceNote": null
+      }
+    },
+    {
+      "@type": "Service",
+      "@id": "https://brisecom.org/services#audit-areas",
+      "identifier": "audit-areas",
+      "order": 4,
+      "category": "Audit",
+      "group": "modules",
+      "name": "Business audit, area by area",
+      "description": "Each area can be contracted on its own.",
+      "serviceType": "Business and market advisory",
+      "provider": {
+        "@id": "https://brisecom.org/#organization"
+      },
+      "areaServed": {
+        "@type": "Country",
+        "name": "Spain"
+      },
+      "availableChannel": {
+        "@type": "ServiceChannel",
+        "serviceUrl": "https://brisecom.org/services",
+        "availableLanguage": [
+          "en",
+          "es"
+        ]
+      },
+      "deliverables": [
+        "Applications — infrastructure and software",
+        "Regulatory — legal, tax and compliance",
+        "Business model — viability and economics"
+      ],
+      "offers": {
+        "@type": "Offer",
+        "priceCurrency": "EUR",
+        "price": "480",
+        "priceSpecification": {
+          "@type": "UnitPriceSpecification",
+          "price": "480",
+          "priceCurrency": "EUR",
+          "unitText": "per area"
+        },
+        "description": "1,440 € the three"
+      },
+      "estimatedDuration": "PT8H",
+      "display": {
+        "orderLabel": "4–6",
+        "durationLabel": "8 h each",
+        "priceLabel": "480 €/area",
+        "priceNote": "1,440 € the three"
+      }
+    },
+    {
+      "@type": "Service",
+      "@id": "https://brisecom.org/services#market-pieces",
+      "identifier": "market-pieces",
+      "order": 5,
+      "category": "Market",
+      "group": "modules",
+      "name": "Market work, piece by piece",
+      "description": "Each piece can be contracted on its own.",
+      "serviceType": "Business and market advisory",
+      "provider": {
+        "@id": "https://brisecom.org/#organization"
+      },
+      "areaServed": {
+        "@type": "Country",
+        "name": "Spain"
+      },
+      "availableChannel": {
+        "@type": "ServiceChannel",
+        "serviceUrl": "https://brisecom.org/services",
+        "availableLanguage": [
+          "en",
+          "es"
+        ]
+      },
+      "deliverables": [
+        "Core — the market, read from the company",
+        "Fit — projection and adjustment to the real market",
+        "Scale-Up — scalability and roadmap"
+      ],
+      "offers": {
+        "@type": "Offer",
+        "priceCurrency": "EUR",
+        "price": "480",
+        "priceSpecification": {
+          "@type": "UnitPriceSpecification",
+          "price": "480",
+          "priceCurrency": "EUR",
+          "unitText": "per piece"
+        },
+        "description": "1,440 € CORE + FIT + SCALE-UP"
+      },
+      "estimatedDuration": "PT8H",
+      "display": {
+        "orderLabel": "7–9",
+        "durationLabel": "8 h each",
+        "priceLabel": "480 €/piece",
+        "priceNote": "1,440 € CORE + FIT + SCALE-UP"
+      }
+    },
+    {
+      "@type": "Service",
+      "@id": "https://brisecom.org/services#protection",
+      "identifier": "protection",
+      "order": 6,
+      "category": "Protection",
+      "group": "modules",
+      "name": "Continuous Protection",
+      "description": "Guardian / monthly monitoring: one-hour meeting on what has changed and what may affect the company. Written report optional.",
+      "serviceType": "Business and market advisory",
+      "provider": {
+        "@id": "https://brisecom.org/#organization"
+      },
+      "areaServed": {
+        "@type": "Country",
+        "name": "Spain"
+      },
+      "availableChannel": {
+        "@type": "ServiceChannel",
+        "serviceUrl": "https://brisecom.org/services",
+        "availableLanguage": [
+          "en",
+          "es"
+        ]
+      },
+      "offers": {
+        "@type": "Offer",
+        "priceCurrency": "EUR",
+        "price": "60",
+        "priceSpecification": {
+          "@type": "UnitPriceSpecification",
+          "price": "60",
+          "priceCurrency": "EUR",
+          "unitText": "per month"
+        },
+        "description": "written report +60 €"
+      },
+      "estimatedDuration": "PT1H",
+      "display": {
+        "orderLabel": "10",
+        "durationLabel": "1 h / month",
+        "priceLabel": "60 €/month",
+        "priceNote": "written report +60 €"
+      }
+    }
+  ]
+}

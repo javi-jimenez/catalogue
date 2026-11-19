@@ -1,0 +1,51 @@
+{
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "@id": "https://brisecom.org/services#market-pieces",
+  "identifier": "market-pieces",
+  "order": 5,
+  "category": "Market",
+  "group": "modules",
+  "name": "Market work, piece by piece",
+  "description": "Each piece can be contracted on its own.",
+  "serviceType": "Business and market advisory",
+  "provider": {
+    "@id": "https://brisecom.org/#organization"
+  },
+  "areaServed": {
+    "@type": "Country",
+    "name": "Spain"
+  },
+  "availableChannel": {
+    "@type": "ServiceChannel",
+    "serviceUrl": "https://brisecom.org/services",
+    "availableLanguage": [
+      "en",
+      "es"
+    ]
+  },
+  "deliverables": [
+    "Core — the market, read from the company",
+    "Fit — projection and adjustment to the real market",
+    "Scale-Up — scalability and roadmap"
+  ],
+  "offers": {
+    "@type": "Offer",
+    "priceCurrency": "EUR",
+    "price": "480",
+    "priceSpecification": {
+      "@type": "UnitPriceSpecification",
+      "price": "480",
+      "priceCurrency": "EUR",
+      "unitText": "per piece"
+    },
+    "description": "1,440 € CORE + FIT + SCALE-UP"
+  },
+  "estimatedDuration": "PT8H",
+  "display": {
+    "orderLabel": "7–9",
+    "durationLabel": "8 h each",
+    "priceLabel": "480 €/piece",
+    "priceNote": "1,440 € CORE + FIT + SCALE-UP"
+  }
+}

@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>BRISECOM catalogue — metadata as JSON</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Metadata of BRISECOM SL as plain JSON with schema.org types: services and prices, promotions, people, organisation and sites. A database without a server.">
+<link rel="canonical" href="https://javi-jimenez.github.io/brisecom-catalogue/">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "DataCatalog",
+  "name": "BRISECOM catalogue",
+  "description": "Metadata of BRISECOM SL as JSON: services, prices, promotions, people, organisation and sites. A database without a server: git is the storage, a URL is the query.",
+  "url": "https://javi-jimenez.github.io/brisecom-catalogue/",
+  "license": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
+  "dataset": [
+    {
+      "@type": "Dataset",
+      "name": "organization",
+      "description": "Legal identity, VAT, address and founder",
+      "url": "https://javi-jimenez.github.io/brisecom-catalogue/data/organization.json",
+      "encodingFormat": "application/json"
+    },
+    {
+      "@type": "Dataset",
+      "name": "people",
+      "description": "People with their ORCID and public profiles",
+      "url": "https://javi-jimenez.github.io/brisecom-catalogue/data/people.json",
+      "encodingFormat": "application/json"
+    },
+    {
+      "@type": "Dataset",
+      "name": "services",
+      "description": "Service catalogue with prices",
+      "url": "https://javi-jimenez.github.io/brisecom-catalogue/data/services.json",
+      "encodingFormat": "application/json"
+    },
+    {
+      "@type": "Dataset",
+      "name": "promotions",
+      "description": "Time-bound offers with validUntil",
+      "url": "https://javi-jimenez.github.io/brisecom-catalogue/data/promotions.json",
+      "encodingFormat": "application/json"
+    },
+    {
+      "@type": "Dataset",
+      "name": "sites",
+      "description": "Sites BRISECOM operates",
+      "url": "https://javi-jimenez.github.io/brisecom-catalogue/data/sites.json",
+      "encodingFormat": "application/json"
+    }
+  ]
+}
+</script>
+<style>
+  :root { color-scheme: light dark; }
+  body { font: 16px/1.6 system-ui, sans-serif; max-width: 46rem; margin: 4rem auto; padding: 0 1.25rem; }
+  h1 { font-size: 1.6rem; margin-bottom: .25rem; }
+  .sub { margin-top: 0; opacity: .7; }
+  table { border-collapse: collapse; width: 100%; margin: 2rem 0; }
+  th, td { text-align: left; padding: .5rem; border-bottom: 1px solid rgba(128,128,128,.3); }
+  code { background: rgba(128,128,128,.15); padding: .1rem .3rem; border-radius: 4px; }
+  .muted { opacity: .6; font-size: .9rem; }
+</style>
+</head>
+<body>
+<h1>BRISECOM catalogue</h1>
+<p class="sub">Metadata as plain JSON. No server, no API key: a URL is the query.</p>
+
+<p>Every dataset is typed with <a href="https://schema.org">schema.org</a>, so a
+consumer does not have to invent a mapping. Fetch, parse, use.</p>
+
+<table>
+<thead><tr><th>Dataset</th><th>What it holds</th><th>URL</th></tr></thead>
+<tbody>
+<tr><td><code>organization</code></td><td>Legal identity, VAT, address and founder</td><td><a href="data/organization.json">data/organization.json</a></td></tr>
+<tr><td><code>people</code></td><td>People with their ORCID and public profiles</td><td><a href="data/people.json">data/people.json</a></td></tr>
+<tr><td><code>services</code></td><td>Service catalogue with prices</td><td><a href="data/services.json">data/services.json</a></td></tr>
+<tr><td><code>promotions</code></td><td>Time-bound offers with validUntil</td><td><a href="data/promotions.json">data/promotions.json</a></td></tr>
+<tr><td><code>sites</code></td><td>Sites BRISECOM operates</td><td><a href="data/sites.json">data/sites.json</a></td></tr>
+</tbody>
+</table>
+
+<h2>Discovery</h2>
+<ul>
+  <li><a href="index.json">index.json</a> — manifest of datasets</li>
+  <li><a href="sitemap.xml">sitemap.xml</a> — every data URL</li>
+  <li><a href="llms.txt">llms.txt</a> — summary for AI agents</li>
+  <li><code>.well-known/catalogue.json</code> — machine entry point</li>
+</ul>
+
+<p class="muted">Last modified 2026-11-19. Text and data licensed
+CC BY-NC-SA 4.0. Generated from
+<a href="https://github.com/javi-jimenez/brisecom-catalogue">the catalogue repo</a>.</p>
+</body>
+</html>

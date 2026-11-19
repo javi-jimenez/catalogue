@@ -91,3 +91,30 @@ The vault is **read-only**: edit the JSON and regenerate. Each note carries
 
 To use it, open this repository as a vault in Obsidian (`Open folder as vault` →
 `vault/`), or symlink `vault/` into an existing vault.
+
+## Public metadata endpoint
+
+The repo also publishes itself as a static site (GitHub Pages), so anything —
+a web app, a script, an AI agent — can query the facts over plain HTTP:
+
+| URL | What |
+|:--|:--|
+| `/index.json` | Manifest: datasets and their URLs |
+| `/data/services.json` | ``OfferCatalog`` with prices |
+| `/data/services/<id>.json` | One `Service`, one URL — no need to walk the list |
+| `/data/people.json` | `Person` with ORCID |
+| `/data/organization.json` | `Organization` with VAT |
+| `/data/promotions.json` | Offers, each with `validUntil` |
+| `/data/sites.json` | Sites operated |
+| `/llms.txt` | Plain summary for AI agents |
+| `/sitemap.xml`, `/robots.txt` | Crawler entry points |
+| `/.well-known/catalogue.json` | Machine discovery |
+
+```bash
+make site      # regenerate docs/ from the JSON
+make lint      # verify every published JSON declares schema.org and a @type
+```
+
+`docs/` is generated; edit the JSON and regenerate. `make check` runs the
+validator, the JSON-LD linter and verifies the vault and the site are current,
+so CI fails on drift rather than publishing stale metadata.

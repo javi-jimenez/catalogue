@@ -1,0 +1,46 @@
+{
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "@id": "https://brisecom.org/services#business-audit",
+  "identifier": "business-audit",
+  "order": 2,
+  "category": "Business",
+  "group": "modules",
+  "name": "Integral Business Audit",
+  "description": "Critical review package: applications, regulatory compliance and business model. The full business study, delivered in 24 h.",
+  "serviceType": "Business and market advisory",
+  "provider": {
+    "@id": "https://brisecom.org/#organization"
+  },
+  "areaServed": {
+    "@type": "Country",
+    "name": "Spain"
+  },
+  "availableChannel": {
+    "@type": "ServiceChannel",
+    "serviceUrl": "https://brisecom.org/services",
+    "availableLanguage": [
+      "en",
+      "es"
+    ]
+  },
+  "offers": {
+    "@type": "Offer",
+    "priceCurrency": "EUR",
+    "price": "1440",
+    "priceSpecification": {
+      "@type": "UnitPriceSpecification",
+      "price": "1440",
+      "priceCurrency": "EUR",
+      "unitText": "per audit"
+    },
+    "description": "3 × 8 h blocks"
+  },
+  "estimatedDuration": "PT24H",
+  "display": {
+    "orderLabel": "2",
+    "durationLabel": "3 × 8 h",
+    "priceLabel": "1,440 €",
+    "priceNote": null
+  }
+}

@@ -1,0 +1,51 @@
+{
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "@id": "https://brisecom.org/services#audit-areas",
+  "identifier": "audit-areas",
+  "order": 4,
+  "category": "Audit",
+  "group": "modules",
+  "name": "Business audit, area by area",
+  "description": "Each area can be contracted on its own.",
+  "serviceType": "Business and market advisory",
+  "provider": {
+    "@id": "https://brisecom.org/#organization"
+  },
+  "areaServed": {
+    "@type": "Country",
+    "name": "Spain"
+  },
+  "availableChannel": {
+    "@type": "ServiceChannel",
+    "serviceUrl": "https://brisecom.org/services",
+    "availableLanguage": [
+      "en",
+      "es"
+    ]
+  },
+  "deliverables": [
+    "Applications — infrastructure and software",
+    "Regulatory — legal, tax and compliance",
+    "Business model — viability and economics"
+  ],
+  "offers": {
+    "@type": "Offer",
+    "priceCurrency": "EUR",
+    "price": "480",
+    "priceSpecification": {
+      "@type": "UnitPriceSpecification",
+      "price": "480",
+      "priceCurrency": "EUR",
+      "unitText": "per area"
+    },
+    "description": "1,440 € the three"
+  },
+  "estimatedDuration": "PT8H",
+  "display": {
+    "orderLabel": "4–6",
+    "durationLabel": "8 h each",
+    "priceLabel": "480 €/area",
+    "priceNote": "1,440 € the three"
+  }
+}

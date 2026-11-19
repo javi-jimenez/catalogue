@@ -1,0 +1,46 @@
+{
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "@id": "https://brisecom.org/services#protection",
+  "identifier": "protection",
+  "order": 6,
+  "category": "Protection",
+  "group": "modules",
+  "name": "Continuous Protection",
+  "description": "Guardian / monthly monitoring: one-hour meeting on what has changed and what may affect the company. Written report optional.",
+  "serviceType": "Business and market advisory",
+  "provider": {
+    "@id": "https://brisecom.org/#organization"
+  },
+  "areaServed": {
+    "@type": "Country",
+    "name": "Spain"
+  },
+  "availableChannel": {
+    "@type": "ServiceChannel",
+    "serviceUrl": "https://brisecom.org/services",
+    "availableLanguage": [
+      "en",
+      "es"
+    ]
+  },
+  "offers": {
+    "@type": "Offer",
+    "priceCurrency": "EUR",
+    "price": "60",
+    "priceSpecification": {
+      "@type": "UnitPriceSpecification",
+      "price": "60",
+      "priceCurrency": "EUR",
+      "unitText": "per month"
+    },
+    "description": "written report +60 €"
+  },
+  "estimatedDuration": "PT1H",
+  "display": {
+    "orderLabel": "10",
+    "durationLabel": "1 h / month",
+    "priceLabel": "60 €/month",
+    "priceNote": "written report +60 €"
+  }
+}

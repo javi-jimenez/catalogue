@@ -1,0 +1,46 @@
+{
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "@id": "https://brisecom.org/services#entry",
+  "identifier": "entry",
+  "order": 0,
+  "category": "Entry",
+  "group": "core",
+  "name": "Initial session",
+  "description": "We listen to the problem, identify it and delimit it. If it is solved here, there is no charge.",
+  "serviceType": "Business and market advisory",
+  "provider": {
+    "@id": "https://brisecom.org/#organization"
+  },
+  "areaServed": {
+    "@type": "Country",
+    "name": "Spain"
+  },
+  "availableChannel": {
+    "@type": "ServiceChannel",
+    "serviceUrl": "https://brisecom.org/services",
+    "availableLanguage": [
+      "en",
+      "es"
+    ]
+  },
+  "offers": {
+    "@type": "Offer",
+    "priceCurrency": "EUR",
+    "price": "0",
+    "priceSpecification": {
+      "@type": "UnitPriceSpecification",
+      "price": "0",
+      "priceCurrency": "EUR",
+      "unitText": "per session"
+    },
+    "description": "Free"
+  },
+  "estimatedDuration": "PT1H",
+  "display": {
+    "orderLabel": "0",
+    "durationLabel": "1 h",
+    "priceLabel": "0 €",
+    "priceNote": null
+  }
+}
