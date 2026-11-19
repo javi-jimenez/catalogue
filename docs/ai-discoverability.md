@@ -14,41 +14,39 @@ con datos verificables, URLs estables y fechas; no con trucos de posicionamiento
 |:--|:--|:--|:--|
 | `robots.txt` (Allow: /) | ✅ | ✅ | ✅ |
 | `sitemap.xml` | ✅ | ✅ | ✅ |
-| `llms.txt` | ❌ | ❌ | ✅ |
-| JSON-LD (`schema.org`) | ✅ `Product`/`Offer` | ❌ | ✅ `DataCatalog` |
-| JSON plano consultable | ❌ (se retiró la copia) | ❌ | ✅ |
-| Fecha visible + actualización | parcial | ✅ | ✅ |
+| `llms.txt` | ✅ | ✅ | ✅ |
+| JSON-LD (`schema.org`) | ✅ `Product`/`Offer` | ✅ `ScholarlyArticle` | ✅ `DataCatalog` |
+| Página indexable por artículo | — | ✅ 24 páginas | — |
+| `citation_*` (Highwire) | — | ✅ | — |
+| JSON plano consultable | ❌ (no copia) | ❌ | ✅ |
+| Fecha visible | parcial | ✅ | ✅ |
 
 Ninguno de los tres bloquee crawlers de IA: `User-agent: * / Allow: /` los
 admite, incluidos `GPTBot`, `ClaudeBot`, `PerplexityBot` y `Google-Extended`.
 
-## Qué falta, por orden de impacto
+## Hecho
 
-1. **`llms.txt` en brisecom.org y laia.brisecom.org.** No es un estándar
-   aprobado por ningún organismo, pero sí una convención con adopción real:
-   Lighthouse lo audita en su comprobación de navegación agéntica, y OpenAI,
-   Anthropic y Google lo publican para su propia documentación. Es barato y
-   ayuda a que un agente no tenga que interpretar el HTML.
+1. **`llms.txt` en las tres webs.** Apunta al JSON canónico en vez de copiar
+   datos. No es un estándar aprobado, pero Lighthouse lo audita y OpenAI,
+   Anthropic y Google lo publican para su propia documentación.
+2. **Una página indexable por whitepaper**, con el abstract completo visible en
+   el cuerpo (nunca oculto), URL estable y fecha. Google Scholar exige una URL
+   por artículo; la portada con 24 tarjetas no servía.
+3. **`citation_*` (Highwire) y JSON-LD `ScholarlyArticle`** con `identifier` =
+   DOI, `author` con ORCID y `datePublished`. Los 24 DOIs ya están asociados a
+   una página que Scholar puede leer.
+4. **Fechas visibles** en la página de cada paper y en la tabla del catálogo.
 
-   Debe decir: qué es el sitio, cuáles son los datos canónicos, dónde viven
-   (el catálogo en GitHub) y qué licencia tienen.
+## Qué falta
 
-2. **Versión Markdown de las páginas que un agente querría citar.** La
-   propuesta `llms.txt` v2 recomienda servir `page.md` junto a `page.html`.
-   Hugo genera el HTML; publicar el `.md` de cada whitepaper ya se hace en el
-   repo, así que es servirlo con el mismo nombre y una cabecera de licencia.
-
-3. **Fechas y versión en el HTML visible**, no solo en el JSON-LD. Un modelo
-   que cita sin fecha produce citas que envejecen mal; una fecha a la vista
-   permite al usuario juzgar si el dato sigue vigente.
-
-4. **`citation_*` (Highwire) en la web de LAIA.** Es lo que lee Google Scholar
-   para indexar los whitepapers como publicaciones académicas, con su DOI. Sin
-   esto, los DOIs existen pero Scholar no los asocia a la página.
-
-5. **JSON-LD en laia.brisecom.org.** Es la única de las tres sin datos
-   estructurados. `ScholarlyArticle` por whitepaper, con `identifier` = DOI,
-   `author` con ORCID y `datePublished`.
+1. **Verificar la indexación en Google Scholar.** No hay API de envío: se
+   comprueba buscando el título. Tarda semanas. Requisitos que ya cumple: PDF
+   con texto buscable, abstract completo accesible, una URL por artículo.
+2. **Versión Markdown de las páginas** (`page.md` junto a `page.html`, como
+   recomienda `llms.txt` v2). El `.md` ya existe en el repo; falta servirlo con
+   el mismo nombre y una cabecera de licencia.
+3. **Someter el catálogo a los agregadores** una vez publicado el primer lote
+   de DOIs: OpenAIRE ya lo recogió por vía de Zenodo.
 
 ## Qué no hacer
 
