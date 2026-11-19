@@ -63,3 +63,31 @@ Checks JSON validity, that every cross-reference resolves (the founder exists in
 `people.json`, every service points at the same organisation), that prices are
 numeric, that identifiers are unique, and that the manifest matches the files on
 disk. A price typo here would reach every site, so this runs in CI.
+
+## Obsidian
+
+`vault/` is a **generated mirror**: one Markdown note per entity, with the JSON
+fields as YAML frontmatter, plus a `.base` file.
+
+Why a mirror and not the JSON directly: neither Dataview nor Bases can read a
+JSON file. Dataview indexes frontmatter and inline fields; Bases queries
+properties of notes. YAML frontmatter on Markdown is the de facto standard both
+of them, Hugo and this repo already speak. So the JSON stays the source and the
+notes are a view of it.
+
+```bash
+make vault          # regenerate vault/
+make check          # validate + fail if the vault is stale
+```
+
+The vault is **read-only**: edit the JSON and regenerate. Each note carries
+`id`, the stable catalogue identifier, so links survive a rename.
+
+| In Obsidian | Needs | What it gives you |
+|:--|:--|:--|
+| `vault/Services.base` | Obsidian 1.9+, core "Bases" | Sortable table of the catalogue, no plugin |
+| `vault/Catalogue.md` | Dataview plugin | The same via `TABLE price, duration_hours` |
+| Everything | nothing | Plain notes with frontmatter, greppable and linkable |
+
+To use it, open this repository as a vault in Obsidian (`Open folder as vault` →
+`vault/`), or symlink `vault/` into an existing vault.

@@ -1,0 +1,23 @@
+# Bases: vista de servicios. Abrir en Obsidian 1.9+ (plugin core "Bases").
+filters:
+  and:
+    - 'type == "service"'
+properties:
+  note.name:
+    displayName: Service
+  note.price:
+    displayName: Price
+  note.currency:
+    displayName: Currency
+views:
+  - type: table
+    name: "Catalogue by price"
+    order:
+      - note.order
+      - note.name
+      - note.group
+      - note.price
+      - note.duration_hours
+    sort:
+      - property: note.order
+        direction: ASC
